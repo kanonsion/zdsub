@@ -14,8 +14,12 @@ import './common/css/reset.css'
 
 Vue.use(ElementUI)
 
-new Vue({
+const vue = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+window.addEventListener('load', function () {
+  vue.$router.replace('/layout/index')
+})
