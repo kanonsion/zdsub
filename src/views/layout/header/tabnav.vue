@@ -53,7 +53,7 @@ export default {
       });
     },
     removeAllTab() {
-      this.$store.dispatch("removeAllTab",this.$router);
+      this.$store.dispatch("removeAllTab", this.$router);
     },
     openMenu(item, e, index) {
       if (index === 0) {
@@ -76,6 +76,13 @@ export default {
         });
       }
     }
+  },
+  mounted() {
+    let { fullPath, name } = this.$router.currentRoute;
+    this.$store.dispatch("addTab", {
+      path: fullPath,
+      name: name
+    });
   }
 };
 </script>

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <el-header id="header">上面</el-header>
+    <el-header id="header">
+      
+    </el-header>
     <tabnav />
   </div>
 </template>

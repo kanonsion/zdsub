@@ -20,11 +20,13 @@ const router = new Router({
       children: [
         {
           path: '/layout/system',
-          component: system
+          component: system,
+          name:'系统管理'
         },
         {
           path: '/layout/role',
-          component: role
+          component: role,
+          name:'角色管理'
         },
         {
           path: '/layout/index',
@@ -42,5 +44,6 @@ const router = new Router({
     }
   ]
 })
+
 
 export default router
