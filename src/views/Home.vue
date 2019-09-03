@@ -1,6 +1,7 @@
 <template>
   <div id="home">
     <homeheader />
+    home
   </div>
 </template>
 

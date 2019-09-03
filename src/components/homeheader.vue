@@ -11,13 +11,13 @@
           </div>
           <div style="width:70%">
             <ul>
-              <li @click="()=>$router.push('/home/work')">首页</li>
-              <li @click="()=>$router.push('/home/work')">援藏工作</li>
-              <li @click="()=>$router.push('/home/work')">援藏政策</li>
-              <li @click="()=>$router.push('/home/work')">援藏需求</li>
-              <li @click="()=>$router.push('/home/work')">援藏路径</li>
-              <li @click="()=>$router.push('/home/school')">援藏高校</li>
-              <li @click="()=>$router.push('/home/work')">人员招聘</li>
+              <li>首页</li>
+              <li @click="jump('/home/work')">援藏工作</li>
+              <li>援藏政策</li>
+              <li>援藏需求</li>
+              <li>援藏路径</li>
+              <li>援藏高校</li>
+              <li>人员招聘</li>
             </ul>
           </div>
         </el-col>
@@ -33,36 +33,45 @@
   </div>
 </template>
 
+<script>
+export default {
+  methods: {
+    jump(url) {
+      console.log(url);
+      this.$router.push(url);
+    }
+  }
+};
+</script>
+
 <style lang='less'>
-#home {
-  .header {
-    background-color: #2980b9;
-    min-height: 60px;
-    width: 100%;
-    color: #ffffff;
-    line-height: 60px;
+.header {
+  background-color: #2980b9;
+  min-height: 60px;
+  width: 100%;
+  color: #ffffff;
+  line-height: 60px;
 
-    .title {
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .img {
       display: flex;
-      justify-content: center;
       align-items: center;
-      .img {
-        display: flex;
-        align-items: center;
-      }
-
-      ul {
-        display: flex;
-        li {
-          flex: 1;
-          cursor: pointer;
-        }
-      }
     }
 
-    .btn {
-      padding-left: 50px;
+    ul {
+      display: flex;
+      li {
+        flex: 1;
+        cursor: pointer;
+      }
     }
+  }
+
+  .btn {
+    padding-left: 50px;
   }
 }
 </style>

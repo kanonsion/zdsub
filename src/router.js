@@ -18,6 +18,11 @@ import adver from './views/home/adver'
 
 Vue.use(Router)
 
+const routerPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return routerPush.call(this, location).catch(error => error)
+}
+
 const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
@@ -42,43 +47,44 @@ const router = new Router({
         }
       ]
     },
+    /*  */
     {
       path: '/home',
       component: Home,
-      children: [
-        {
-          path: '/home/work',
-          component: work
-        },
-        {
-          path: '/home/school',
-          component: school
-        },
-        {
-          path: '/home/process',
-          component: process1
-        },
-        {
-          path: '/home/policy',
-          component: policy
-        },
-        {
-          path: '/home/need',
-          component: need
-        },
-        {
-          path: '/home/adver',
-          component: adver
-        },
-      ]
     },
     {
       path: '/',
       redirect: '/home'
     },
+    /*  */
     {
       path: '/login',
       component: Login
+    },
+    /* home */
+    {
+      path: '/home/work',
+      component: work
+    },
+    {
+      path: '/home/school',
+      component: school
+    },
+    {
+      path: '/home/process',
+      component: process1
+    },
+    {
+      path: '/home/policy',
+      component: policy
+    },
+    {
+      path: '/home/need',
+      component: need
+    },
+    {
+      path: '/home/adver',
+      component: adver
     }
   ]
 })
