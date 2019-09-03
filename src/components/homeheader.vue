@@ -11,13 +11,13 @@
           </div>
           <div style="width:70%">
             <ul>
-              <li>首页</li>
+              <li @click="jump('/')">首页</li>
               <li @click="jump('/home/work')">援藏工作</li>
-              <li>援藏政策</li>
-              <li>援藏需求</li>
-              <li>援藏路径</li>
-              <li>援藏高校</li>
-              <li>人员招聘</li>
+              <li @click="jump('/home/policy')">援藏政策</li>
+              <li @click="jump('/home/need')">援藏需求</li>
+              <li @click="jump('/home/process')">援藏路径</li>
+              <li @click="jump('/home/school')">援藏高校</li>
+              <li @click="jump('/home/adver')">人员招聘</li>
             </ul>
           </div>
         </el-col>

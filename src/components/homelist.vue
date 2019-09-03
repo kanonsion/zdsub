@@ -34,6 +34,6 @@ export default {
 
 .box-card {
   width: 1200px;
-  margin: 100px auto
+  margin: 50px auto
 }
 </style>
