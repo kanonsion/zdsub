@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import layout from './views/layout/layout'
 import Home from './views/Home'
+import Login from './views/Login'
 /* system */
 import system from './views/system/system'
 import role from './views/system/role'
@@ -41,6 +42,10 @@ const router = new Router({
     {
       path: '/',
       redirect: '/home'
+    },
+    {
+      path:'/login',
+      component:Login
     }
   ]
 })
