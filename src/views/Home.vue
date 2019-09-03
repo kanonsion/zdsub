@@ -23,9 +23,9 @@
         </el-col>
         <el-col :span="5">
           <div class="btn">
-            <el-button type="info"  size="mini">
-              <router-link to='/login' style="color:#ffffff">登录</router-link>
-            </el-button>
+            <router-link to="/login" style="color:#ffffff">
+              <el-button type="info" size="mini">登录</el-button>
+            </router-link>
           </div>
         </el-col>
       </el-row>
@@ -64,8 +64,8 @@ export default {};
       }
     }
 
-    .btn{
-      padding-left: 50px
+    .btn {
+      padding-left: 50px;
     }
   }
 }
