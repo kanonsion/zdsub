@@ -8,6 +8,13 @@ import Login from './views/Login'
 import system from './views/system/system'
 import role from './views/system/role'
 import index from './views/system/index'
+/* home */
+import work from './views/home/work'
+import school from './views/home/school'
+import process1 from './views/home/process'
+import policy from './views/home/policy'
+import need from './views/home/need'
+import adver from './views/home/adver'
 
 Vue.use(Router)
 
@@ -22,12 +29,12 @@ const router = new Router({
         {
           path: '/layout/system',
           component: system,
-          name:'系统管理'
+          name: '系统管理'
         },
         {
           path: '/layout/role',
           component: role,
-          name:'角色管理'
+          name: '角色管理'
         },
         {
           path: '/layout/index',
@@ -37,15 +44,41 @@ const router = new Router({
     },
     {
       path: '/home',
-      component: Home
+      component: Home,
+      children: [
+        {
+          path: '/home/work',
+          component: work
+        },
+        {
+          path: '/home/school',
+          component: school
+        },
+        {
+          path: '/home/process',
+          component: process1
+        },
+        {
+          path: '/home/policy',
+          component: policy
+        },
+        {
+          path: '/home/need',
+          component: need
+        },
+        {
+          path: '/home/adver',
+          component: adver
+        },
+      ]
     },
     {
       path: '/',
       redirect: '/home'
     },
     {
-      path:'/login',
-      component:Login
+      path: '/login',
+      component: Login
     }
   ]
 })
