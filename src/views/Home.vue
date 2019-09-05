@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <homeheader />
-    home
+    
   </div>
 </template>
 
@@ -13,3 +13,7 @@ export default {
   }
 };
 </script>
+
+<style lang="less">
+  
+</style>
