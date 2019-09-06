@@ -15,6 +15,7 @@ import process1 from './views/home/process'
 import policy from './views/home/policy'
 import need from './views/home/need'
 import adver from './views/home/adver'
+import homelistshow from './components/homelistshow'
 
 Vue.use(Router)
 
@@ -85,6 +86,10 @@ const router = new Router({
     {
       path: '/home/adver',
       component: adver
+    },
+    {
+      path:'/home/listshow',
+      component:homelistshow
     }
   ]
 })

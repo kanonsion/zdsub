@@ -11,7 +11,7 @@
       <div class="list">
         <ul>
           <!--  -->
-          <li>
+          <li @click="()=>{$router.push('/home')}">
             <span>关于IPv6测试校园网断网的通知</span>
             <span>2019-08-31 &nbsp; 10:51:58</span>
           </li>
@@ -29,20 +29,18 @@
       <el-pagination background layout="prev, pager, next" :total="1000" class="pagination"></el-pagination>
     </section>
 
-    <!--  -->
-    <footer class="footer">
-      <div class="copyright">
-        <div class="context">@版权所有</div>
-      </div>
-    </footer>
+    <!-- footer  -->
+    <homefooter />
   </div>
 </template>
 
 <script>
 import homeheader from "./homeheader";
+import homefooter from "./homefooter";
 export default {
   components: {
-    homeheader
+    homeheader,
+    homefooter
   },
   props: {}
 };
@@ -90,24 +88,6 @@ export default {
     }
     .pagination {
       text-align: right;
-    }
-  }
-  .footer {
-    margin-top: 20px;
-    background-color: #34495e;
-    width: 100%;
-    height: 80px;
-    .copyright {
-      width: 80%;
-      padding-left: 10%;
-      padding-top: 20px;
-      .context {
-        border-top: 1px solid #7f8c8d;
-        padding-top: 20px;
-        margin-top: 10px;
-        font-size: 13px;
-        color: #95a5a6;
-      }
     }
   }
 }
