@@ -1,7 +1,6 @@
 <template>
   <div>
     <list />
-    work
   </div>
 </template>
 

@@ -67,7 +67,7 @@ export default {
   align-items: center;
   position: relative;
   overflow: hidden;
-  background-color: #3498db;
+  background-color: #bdc3c7;
   .from {
     background: rgba(230, 238, 232, 0.5);
     box-shadow: 0px 0px 8px black;

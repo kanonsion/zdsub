@@ -15,8 +15,8 @@
           <li @click="jump('/home/adver')">人员招聘</li>
         </ul>
       </div>
-      <div class="btn">
-        <el-button type="info" plain>登录</el-button>
+      <div class="btn" @click="jump('/login')">
+        <el-button type="info" plain size="small">登录</el-button>
       </div>
     </header>
     <!-- 遮罩层 -->

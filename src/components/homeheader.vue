@@ -42,11 +42,11 @@ export default {
       margin-left: 15%;
       .top {
         height: 70%;
-        border-top: 8px solid #2980b9
+        border-bottom: 1px solid #2c3e50;
       }
       ul {
         height: 29%;
-        border-top: 1px solid #2c3e50;
+        margin-top: 5px;
         display: flex;
         flex-wrap: nowrap;
         li {

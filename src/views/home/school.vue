@@ -1,7 +1,6 @@
 <template>
   <div>
     <list />
-    school
   </div>
 </template>
 

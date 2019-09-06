@@ -1,7 +1,6 @@
 <template>
   <div>
     <list />
-    need
   </div>
 </template>
 
