@@ -80,7 +80,7 @@ export default {
     transition: 0.4s all;
   }
   .from:hover {
-    box-shadow: 0px 0px 16px black;
+    box-shadow: 0px 0px 16px black
   }
 }
 </style>
