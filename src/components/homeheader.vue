@@ -3,7 +3,7 @@
     <header class="header">
       <div class="main">
         <div class="top">
-          <img src="http://182.92.64.223:8080/zdsub/image/logo.png" alt />
+          <img src="./../../public/images/logo1.png" alt />
         </div>
         <ul>
           <li @click="jump('/')">首页</li>
@@ -43,6 +43,9 @@ export default {
       .top {
         height: 70%;
         border-bottom: 1px solid #2c3e50;
+        img{
+          height: 100%;
+        }
       }
       ul {
         height: 29%;

@@ -2,7 +2,7 @@
   <div id="home">
     <header class="navwrapper">
       <div class="logo">
-        <img src="http://182.92.64.223:8080/zdsub/image/logo.png" alt />
+        <img src="./../../public/images/logo2.png" alt />
       </div>
       <div class="nav">
         <ul>
@@ -128,7 +128,10 @@ export default {
     .logo {
       position: absolute;
       width: 180px;
-      left: 60px;
+      left: 0;
+      img{
+        width: 150%;
+      }
     }
     .nav {
       padding-right: 35px;
