@@ -80,6 +80,7 @@ export default {
 </script>
 
 <style lang="less">
+@import url('./../../../common/css/mixin.less');
 #asideNav {
   width: auto !important;
   display: flex;
