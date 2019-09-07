@@ -31,18 +31,18 @@ export default {
 </script>
 
 <style lang='less'>
+@import url('./../common/css/mixin.less');
 #homeheader {
   .header {
-    background: #fff url(https://www.tsinghua.edu.cn/publish/newthu/newthu_cnt/images/bg.jpg)
+    background: @fc url(https://www.tsinghua.edu.cn/publish/newthu/newthu_cnt/images/bg.jpg)
       repeat-x top;
     height: 120px;
     .main {
-      width: 70%;
       height: 100%;
-      margin-left: 15%;
+      .center(70%);
       .top {
         height: 70%;
-        border-bottom: 1px solid #2c3e50;
+        border-bottom: 1px solid @darkblue;
         img{
           height: 100%;
         }
@@ -60,7 +60,7 @@ export default {
           width: 20px;
           text-align: center;
           &:hover{
-            background-color: #3498db
+            background-color: @blue
           }
         }
       }

@@ -47,38 +47,33 @@ export default {
 </script>
 
 <style lang="less">
+@import url("./../common/css/mixin.less");
 #homelist {
-  margin: -20px;
   .banner {
-    background-color: #ecf0f1;
+    background-color: @bc;
     height: 270px;
     margin-top: 20px;
     .banner_img {
       width: 80%;
-      height: 100%;
-      background: url(http://pic1.win4000.com/wallpaper/0/598d411133c78.jpg)
-        no-repeat;
+      .bg("http://pic1.win4000.com/wallpaper/0/598d411133c78.jpg", 100%);
       background-size: cover;
       background-position-y: bottom;
       margin-left: 10%;
     }
   }
   .main {
-    width: 60%;
-    margin: auto;
+    .center(60%);
     margin-top: 20px;
     .list {
       margin-top: 40px;
       ul {
         li {
-          width: 100%;
-          margin: auto;
+          .center(100%);
           height: 40px;
-          display: flex;
-          justify-content: space-between;
-          border-bottom: 1px solid #bdc3c7;
+          .flex(space-between);
+          border-bottom: 1px solid @grey;
           cursor: pointer;
-          color: #999;
+          color: @grey;
           margin-bottom: 40px;
           span {
             padding: 0 40px 0 40px;

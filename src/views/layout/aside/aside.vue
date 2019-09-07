@@ -109,7 +109,7 @@ export default {
       background-color: #020f1d !important;
       border-bottom: 1px solid #020f1d;
       &:hover {
-        color: #ffffff !important;
+        color: @fc !important;
         background-color: #375573 !important;
       }
     }
@@ -117,7 +117,7 @@ export default {
       background-color: #56a9ff !important;
     }
     .is-opened > .el-submenu__title > .el-icon-arrow-down {
-      color: #ffffff;
+      color: @fc;
       font-weight: 500;
       font-size: 18px;
     }

@@ -88,6 +88,7 @@ export default {
 </script>
 
 <style lang="less">
+@import url('./../../../common/css/mixin.less');
 #tabbox {
   height: 42px;
   min-height: 42px;
@@ -126,9 +127,9 @@ export default {
     }
     li.active {
       background: #409eff;
-      color: #ffffff;
+      color: @fc;
       a {
-        color: #ffffff;
+        color: @fc;
       }
     }
   }

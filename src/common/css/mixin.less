@@ -1,0 +1,30 @@
+@blue     : #3498db;
+@darkblue :#34495e;
+@grey     : #7f8c8d;
+@yellow   : #f1c40f;
+@bc       : #ecf0f1;
+@fc       : #fff;
+
+// 背景图片
+.bg(@url, @height) {
+  background: url(@url);
+  height    : @height;
+}
+
+// 绝对定位及位置
+.abs(@width) {
+  position: absolute;
+  width   : @width;
+}
+
+// flex定位
+.flex(@justify: center) {
+  display        : flex;
+  justify-content: @justify
+}
+
+// 居中定位
+.center(@width) {
+  width : @width;
+  margin: auto
+}

@@ -42,26 +42,24 @@ export default {
 </script>
 
 <style lang="less">
+@import url('./../common/css/mixin.less');
 #homelistshow {
-  margin-top: -40px;
   .main {
-    width: 60%;
-    margin: auto;
+    .center(60%);
     margin-top: 40px;
     .breadcrumb {
       font-size: 16px;
     }
     .context {
       margin: 40px 20px 20px 20px;
-      display: flex;
-      justify-content: space-between;
+      .flex(space-between);
       min-height: 600px;
       .detail {
         width: 70%;
         .title {
           font-size: 24px;
           padding-bottom: 20px;
-          border-bottom: 1px solid #95a5a6;
+          border-bottom: 1px solid @grey;
         }
         .text {
           padding-top: 20px;

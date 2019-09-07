@@ -60,19 +60,28 @@ export default {
 </script>
 
 <style lang="less">
+@import url("./../common/css/mixin.less");
 .register {
   height: 100vh;
-  display: flex;
-  justify-content: center;
+  .flex;
   align-items: center;
   position: relative;
   overflow: hidden;
-  background-color: #bdc3c7;
+	background: linear-gradient(135deg, #1abc9c, #2ecc71, #3498db, #9b59b6) left center/400% 400%;
+  animation: move 10s ease-in-out infinite;
+  @keyframes move {
+    0%,
+    100%{
+      background-position-x: left
+    }
+    50%{
+      background-position-x: right
+    }
+  }
   .from {
     background: rgba(230, 238, 232, 0.5);
     box-shadow: 0px 0px 8px black;
-    display: flex;
-    justify-content: center;
+    .flex;
     align-items: center;
     padding: 10px 50px;
     border-radius: 4px;

@@ -9,22 +9,22 @@
 </template>
 
 <style lang="less">
+@import url('./../common/css/mixin.less');
 #homefooter {
   .footer {
     margin-top: 20px;
-    background-color: #34495e;
+    background-color: @darkblue;
     width: 100%;
     height: 80px;
     .copyright {
-      width: 80%;
-      padding-left: 10%;
+      .center(80%);
       padding-top: 20px;
       .context {
-        border-top: 1px solid #7f8c8d;
+        border-top: 1px solid @grey;
         padding-top: 20px;
         margin-top: 10px;
         font-size: 13px;
-        color: #95a5a6;
+        color: @grey;
       }
     }
   }

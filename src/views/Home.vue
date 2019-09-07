@@ -107,7 +107,6 @@ export default {
   },
   methods: {
     jump(url) {
-      console.log(url);
       this.$router.push(url);
     }
   }
@@ -115,21 +114,19 @@ export default {
 </script>
 
 <style lang="less">
+@import url("./../common/css/mixin.less");
 #home {
   position: relative;
   .navwrapper {
-    position: absolute;
-    width: 100%;
+    .abs(100%);
     z-index: 10;
-    display: flex;
-    justify-content: center;
+    .flex;
     align-items: center;
-    border-bottom: 1px solid #2c3e50;
+    border-bottom: 1px solid @grey;
     .logo {
-      position: absolute;
-      width: 180px;
+      .abs(180px);
       left: 0;
-      img{
+      img {
         width: 150%;
       }
     }
@@ -137,10 +134,10 @@ export default {
       padding-right: 35px;
       padding-top: 30px;
       padding-bottom: 30px;
-      color: #ffffff;
+      color: @fc;
       width: 50%;
       ul {
-        display: flex;
+        .flex;
         flex-wrap: nowrap;
         li {
           flex: 1;
@@ -151,8 +148,8 @@ export default {
           text-align: center;
         }
         li:hover {
-          background: #34495e;
-          border-top: 1px solid #f1c40f;
+          background: @darkblue;
+          border-top: 1px solid @yellow;
         }
       }
     }
@@ -163,11 +160,10 @@ export default {
   .shade {
     width: 100%;
     z-index: 9;
-    background: #7f8c8d;
+    background: @grey;
     opacity: 0.2;
-    width: 100%;
     height: 105px;
-    position: absolute;
+    .abs(100%);
     top: 0;
     left: 0;
   }
@@ -175,33 +171,32 @@ export default {
     z-index: 0;
   }
   .cbg {
-    background: url(http://img.zcool.cn/community/01c803554b41ae000001bf72a77af3.jpg@2o.jpg);
-    position: absolute;
     z-index: 2;
     transform: rotate(-3deg);
     transform-origin: center top;
     -ms-transform: rotate(-3deg);
     -ms-transform-origin: center top;
-    height: 100%;
-    width: 200%;
+    .abs(200%);
+    .bg(
+      "http://img.zcool.cn/community/01c803554b41ae000001bf72a77af3.jpg@2o.jpg",
+      100%
+    );
     right: -5px;
     top: 660px;
   }
   .news {
-    position: absolute;
     z-index: 10;
-    width: 100%;
+    .abs(100%);
     .main {
-      color: #ffffff;
-      width: 80%;
-      margin: auto;
+      color: @fc;
+      .center(80%);
       h2 {
         text-align: center;
         font-size: 22px;
         span {
           height: 1px;
           width: 60px;
-          background: #fff;
+          background: @fc;
           display: inline-block;
           vertical-align: middle;
           opacity: 0.5;
@@ -218,7 +213,7 @@ export default {
           padding: 5px 30px 30px 20px;
           margin-right: 30px;
           overflow: hidden;
-          border-left: 1px solid #bdc3c7;
+          border-left: 1px solid @fc;
           display: -webkit-box;
           .date {
             margin-right: 30px;
@@ -231,7 +226,7 @@ export default {
             .title {
               font-size: 16px;
               &:hover {
-                color: #e67e22;
+                color: @yellow;
               }
             }
             .text {
@@ -239,7 +234,7 @@ export default {
               text-overflow: ellipsis;
               overflow: hidden;
               font-size: 12px;
-              color: #7f8c8d;
+              color: @grey;
               line-height: 20px;
               margin-top: 12px;
             }
@@ -249,24 +244,21 @@ export default {
     }
   }
   .footer {
-    width: 100%;
-    height: 200px;
-    position: absolute;
     top: 1280px;
-    background: url(https://www.tsinghua.edu.cn/publish/thu2018/images/footer.jpg);
     background-size: cover;
+    .bg('https://www.tsinghua.edu.cn/publish/thu2018/images/footer.jpg',200px);
+    .abs(100%);
     .copyright {
-      position: absolute;
       z-index: 10;
-      width: 80%;
       padding-left: 10%;
       top: 120px;
+      .abs(80%);
       .context {
-        border-top: 1px solid #7f8c8d;
+        border-top: 1px solid @grey;
         padding-top: 20px;
         margin-top: 10px;
         font-size: 13px;
-        color: #95a5a6;
+        color: @grey;
       }
     }
   }
