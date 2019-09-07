@@ -19,6 +19,7 @@
 
 <script>
 import { Message } from "element-ui";
+import { login } from "./../api/home";
 export default {
   data() {
     var validatorName = (rule, value, callback) => {
@@ -45,12 +46,13 @@ export default {
     };
   },
   methods: {
-    submitForm(formname) {
-      this.$refs[formname].validate(valid => {
-        if (valid) {
-          this._login();
-        }
+    async submitForm(formname) {
+      let { name, password } = this.login;
+      let res = await login({
+        user_name: name,
+        pass_word: password
       });
+      console.log(res);
     },
     resetForm(formname) {
       this.$refs[formname].resetFields();
@@ -67,15 +69,16 @@ export default {
   align-items: center;
   position: relative;
   overflow: hidden;
-	background: linear-gradient(135deg, #1abc9c, #2ecc71, #3498db, #9b59b6) left center/400% 400%;
+  background: linear-gradient(135deg, #1abc9c, #2ecc71, #3498db, #9b59b6) left
+    center/400% 400%;
   animation: move 10s ease-in-out infinite;
   @keyframes move {
     0%,
-    100%{
-      background-position-x: left
+    100% {
+      background-position-x: left;
     }
-    50%{
-      background-position-x: right
+    50% {
+      background-position-x: right;
     }
   }
   .from {
@@ -89,7 +92,7 @@ export default {
     transition: 0.4s all;
   }
   .from:hover {
-    box-shadow: 0px 0px 16px black
+    box-shadow: 0px 0px 16px black;
   }
 }
 </style>

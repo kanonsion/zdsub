@@ -6,6 +6,5 @@ module.exports = {
   devServer: {
     port: 2333, // 端口号
     open: true,
-    proxy: null // 设置代理
-  },
+  }
 }
