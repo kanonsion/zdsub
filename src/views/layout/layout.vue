@@ -20,7 +20,7 @@
 <script>
 import layoutaside from "./aside/aside";
 import layoutheader from "./header/header";
-import Bottom from './footer/bottom'
+import Bottom from "./footer/bottom";
 export default {
   components: {
     layoutaside,

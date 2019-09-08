@@ -111,7 +111,8 @@ export default {
   display: flex;
   flex-direction: column;
   border-right: solid 1px #e6e6e6;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   .el-menu-vertical:not(.el-menu--collapse) {
     width: 200px;
     height: 100%;
