@@ -28,6 +28,31 @@
             :index="item.path"
           >{{item.name}}</el-menu-item>
         </el-submenu>
+
+        <el-submenu index='2'>
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>援藏高校</span>
+          </template>
+          <el-menu-item index="/layout/school">
+            学校管理
+          </el-menu-item>
+        </el-submenu>
+        
+        <el-submenu index='3'>
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>援藏工作</span>
+          </template>
+        </el-submenu>
+
+        <el-submenu index='4'>
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>招聘管理</span>
+          </template>
+        </el-submenu>
+
       </el-menu>
     </el-aside>
   </div>
@@ -68,7 +93,7 @@ export default {
         path: `${key}`,
         name: name
       });
-    }
+    },
   },
   watch: {
     // 监听浏览器直接输入路由，将此路由添加到tabnavBox
@@ -80,7 +105,7 @@ export default {
 </script>
 
 <style lang="less">
-@import url('./../../../common/css/mixin.less');
+@import url("./../../../common/css/mixin.less");
 #asideNav {
   width: auto !important;
   display: flex;

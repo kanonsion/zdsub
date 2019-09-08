@@ -2,11 +2,11 @@
   <div class="register">
     <div class="from">
       <el-form :model="login" :rules="rules" ref="login" status-icon>
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="login.name" placeholder="请输入用户名"></el-input>
+        <el-form-item label="用户名" prop="user_name">
+          <el-input v-model="login.user_name" placeholder="请输入用户名"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="login.password" type="password" placeholder="请输入密码"></el-input>
+        <el-form-item label="密码" prop="pass_word">
+          <el-input v-model="login.pass_word" type="password" placeholder="请输入密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('login')">登录</el-button>
@@ -20,6 +20,7 @@
 <script>
 import { Message } from "element-ui";
 import { login } from "./../api/home";
+import md5 from "md5";
 export default {
   data() {
     var validatorName = (rule, value, callback) => {
@@ -31,31 +32,45 @@ export default {
     };
     return {
       login: {
-        name: "",
-        password: ""
+        user_name: "",
+        pass_word: ""
       },
       rules: {
-        name: [
+        // label prop
+        user_name: [
           //trigger 触发时机
           { required: true, message: "请输入用户名", trigger: "blur" },
-          { min: 3, max: 8, message: "长度在 3 到 5 个字符", trigger: "blur" },
           { validator: validatorName, trigger: "blur" }
         ],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }]
+        pass_word: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
     };
   },
   methods: {
-    async submitForm(formname) {
-      let { name, password } = this.login;
-      let res = await login({
-        user_name: name,
-        pass_word: password
+    submitForm(formname) {
+      this.$refs[formname].validate(valid => {
+        if (valid) {
+          let { _login, login } = this;
+          //登录
+          _login({
+            user_name: login.user_name,
+            pass_word: md5(login.pass_word)
+          });
+        }
       });
-      console.log(res);
     },
     resetForm(formname) {
       this.$refs[formname].resetFields();
+    },
+    async _login(users) {
+      let res = await login(users);
+      if (res) {
+        let { status, msg } = res.data;
+        if (status === 200) {
+          Message.success(msg);
+          this.$router.push('/layout/index')
+        }
+      }
     }
   }
 };

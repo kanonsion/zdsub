@@ -8,6 +8,8 @@ import Login from './views/Login'
 import system from './views/system/system'
 import role from './views/system/role'
 import index from './views/system/index'
+/* school */
+import laySchool from './views/school/school'
 /* home */
 import work from './views/home/work'
 import school from './views/home/school'
@@ -45,6 +47,10 @@ const router = new Router({
         {
           path: '/layout/index',
           component: index
+        },
+        {
+          path: '/layout/school',
+          component: laySchool
         }
       ]
     },
@@ -90,7 +96,7 @@ const router = new Router({
     {
       path:'/home/listshow',
       component:homelistshow
-    }
+    },
   ]
 })
 
