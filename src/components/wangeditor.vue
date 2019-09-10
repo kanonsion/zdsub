@@ -1,44 +1,167 @@
 <template>
-  <div>
-    <div ref="div1" class="toolbar"></div>
-    <div style="padding: 5px 0; color: #ccc">中间隔离带</div>
-    <div ref="text" class="text">
-      <!--可使用 min-height 实现编辑区域自动增加高度-->
-      <p>请输入内容</p>
-    </div>
-    <button v-on:click="getContent">查看内容</button>
+  <div id="wangeditor">
+    <el-form-item label="详细信息">
+      <div ref="editorElem"></div>
+    </el-form-item>
+    <el-form-item label="援藏历史">
+      <div ref="editorElem2"></div>
+    </el-form-item>
   </div>
 </template>
-
 
 <script>
 import E from "wangeditor";
 export default {
-  name: "wangeditor",
-  methods: {
-    getContent: function() {
-      console.log(this.editorContent);
+  data() {
+    return {
+      editorContent: ""
+    };
+  },
+  props: ["catchData", "content", "catchDataTwo", "contentTwo"], //接收父组件的方法
+  watch: {
+    content(val) {
+      this.editor.txt.html(val);
+    },
+    contentTwo(val) {
+      this.editor2.txt.html(val);
     }
   },
+  methods: {},
   mounted() {
-    var editor = new E(this.$refs.div1, this.$refs.div2);
-    // 下面两个配置，使用其中一个即可显示“上传图片”的tab。但是两者不要同时使用！！！
-    // editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
-    editor.customConfig.uploadImgServer = "/upload"; // 上传图片到服务器
-    editor.customConfig.onchange = html => {
+    this.editor = new E(this.$refs.editorElem); //创建富文本实例
+    this.editor.customConfig.onchange = html => {
       this.editorContent = html;
+      this.catchData(html); //把这个html通过catchData的方法传入父组件
     };
-    editor.create();
+    this.editor.customConfig.uploadImgServer = "你的上传图片的接口";
+    this.editor.customConfig.uploadFileName = "你自定义的文件名";
+    this.editor.customConfig.uploadImgHeaders = {};
+    this.editor.customConfig.menus = [
+      //菜单配置
+      "head",
+      "list", // 列表
+      "justify", // 对齐方式
+      "bold",
+      "fontSize", // 字号
+      "italic",
+      "underline",
+      "image", // 插入图片
+      "foreColor", // 文字颜色
+      "undo", // 撤销
+      "redo" // 重复
+    ];
+    //下面是最重要的的方法
+    this.editor.customConfig.uploadImgHooks = {
+      before: function(xhr, editor, files) {
+        // 图片上传之前触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+        // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+        // return {
+        //     prevent: true,
+        //     msg: '放弃上传'
+        // }
+      },
+      success: function(xhr, editor, result) {
+        // 图片上传并返回结果，图片插入成功之后触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+        this.imgUrl = Object.values(result.data).toString();
+      },
+      fail: function(xhr, editor, result) {
+        // 图片上传并返回结果，但图片插入错误时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+      },
+      error: function(xhr, editor) {
+        // 图片上传出错时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+      },
+      timeout: function(xhr, editor) {
+        // 图片上传超时时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+      },
+
+      // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+      // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+      customInsert: function(insertImg, result, editor) {
+        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        let url = Object.values(result.data); //result.data就是服务器返回的图片名字和链接
+        JSON.stringify(url); //在这里转成JSON格式
+        insertImg(url);
+        // result 必须是一个 JSON 格式字符串！！！否则报错
+      }
+    };
+
+    this.editor.create();
+
+    /*  */
+    this.editor2 = new E(this.$refs.editorElem2); //创建富文本实例
+    this.editor2.customConfig.onchange = html => {
+      this.editorContent = html;
+      this.catchDataTwo(html); //把这个html通过catchData的方法传入父组件
+    };
+    this.editor2.customConfig.uploadImgServer = "你的上传图片的接口";
+    this.editor2.customConfig.uploadFileName = "你自定义的文件名";
+    this.editor2.customConfig.uploadImgHeaders = {};
+    this.editor2.customConfig.menus = [
+      //菜单配置
+      "head",
+      "list", // 列表
+      "justify", // 对齐方式
+      "bold",
+      "fontSize", // 字号
+      "italic",
+      "underline",
+      "image", // 插入图片
+      "foreColor", // 文字颜色
+      "undo", // 撤销
+      "redo" // 重复
+    ];
+    //下面是最重要的的方法
+    this.editor2.customConfig.uploadImgHooks = {
+      before: function(xhr, editor, files) {
+        // 图片上传之前触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，files 是选择的图片文件
+        // 如果返回的结果是 {prevent: true, msg: 'xxxx'} 则表示用户放弃上传
+        // return {
+        //     prevent: true,
+        //     msg: '放弃上传'
+        // }
+      },
+      success: function(xhr, editor, result) {
+        // 图片上传并返回结果，图片插入成功之后触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+        this.imgUrl = Object.values(result.data).toString();
+      },
+      fail: function(xhr, editor, result) {
+        // 图片上传并返回结果，但图片插入错误时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+      },
+      error: function(xhr, editor) {
+        // 图片上传出错时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+      },
+      timeout: function(xhr, editor) {
+        // 图片上传超时时触发
+        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+      },
+
+      // 如果服务器端返回的不是 {errno:0, data: [...]} 这种格式，可使用该配置
+      // （但是，服务器端返回的必须是一个 JSON 格式字符串！！！否则会报错）
+      customInsert: function(insertImg, result, editor) {
+        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        let url = Object.values(result.data); //result.data就是服务器返回的图片名字和链接
+        JSON.stringify(url); //在这里转成JSON格式
+        insertImg(url);
+        // result 必须是一个 JSON 格式字符串！！！否则报错
+      }
+    };
+
+    this.editor2.create();
   }
 };
-</script>
-
-<style scoped>
-.toolbar {
-  border: 1px solid #ccc;
-}
-.text {
-  border: 1px solid #ccc;
-  height: 600px;
-}
-</style>
+</Script>

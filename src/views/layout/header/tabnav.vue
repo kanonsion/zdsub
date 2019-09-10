@@ -5,7 +5,7 @@
         v-for="(item, index) in this.$store.state.tabnavBox"
         :key="index"
         class="tabnav"
-        :class="{ active: $route.path === item.path }"
+        :class="{ active: detail($route.path) === item.path }"
         @contextmenu.prevent="openMenu(item,$event,index)"
       >
         <router-link :to="item.path">{{item.name}}</router-link>
@@ -41,7 +41,7 @@ export default {
     removeTab(item) {
       this.$store.dispatch("removeTab", {
         item,
-        fullPath: this.$route.fullPath,
+        fullPath: this.detail(this.$route.fullPath),
         router: this.$router
       });
     },
@@ -62,6 +62,11 @@ export default {
       this.rightMenuShow = true;
       (this.left = e.clientX + 10), (this.top = e.clientY);
       this.$store.dispatch("openMenu", item);
+    },
+    /* 处理key */
+    detail(key) {
+      if(key.indexOf("/", 8) === -1) return key
+      return key.substring(0, key.indexOf("/", 8));
     }
   },
   watch: {
@@ -80,7 +85,7 @@ export default {
   mounted() {
     let { fullPath, name } = this.$router.currentRoute;
     this.$store.dispatch("addTab", {
-      path: fullPath,
+      path: this.detail(fullPath),
       name: name
     });
   }
@@ -88,7 +93,7 @@ export default {
 </script>
 
 <style lang="less">
-@import url('./../../../common/css/mixin.less');
+@import url("./../../../common/css/mixin.less");
 #tabbox {
   height: 42px;
   min-height: 42px;

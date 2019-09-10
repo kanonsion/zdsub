@@ -13,6 +13,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 
 /* style */
 import './common/css/reset.css'
+import './common/css/common.less'
 
 Vue.use(ElementUI)
 

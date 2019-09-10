@@ -6,30 +6,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     /* tab */
-    tabnavBox: [
-      {
-        path: '/layout/index',
-        name: '主页'
-      }
-    ],
+    tabnavBox: [],
     /* 右边 */
-    routers: [
-      {
-        path: '/layout/system',
-        name: '菜单管理'
-      },
-      {
-        path: '/layout/role',
-        name: '角色管理'
-      }
-    ],
+    routers: [],
     /* 右键获取的值 */
     tabNav: {}
   },
   mutations: {
     addTab(state, tab) {
       for (const item of state.tabnavBox) {
-        if (item.path === tab.path) {
+        if (item.path === tab.path || (tab.path === null && tab.name === null)) {
           return false
         }
       }
@@ -62,9 +48,11 @@ export default new Vuex.Store({
         path: '/layout/index',
         name: '主页'
       }]
-      console.log(router)
       let url = state.tabnavBox[0]
       router.push(url.path)
+    },
+    addRouters(state,routers){
+      state.routers = routers
     }
   },
   actions: {
@@ -87,6 +75,10 @@ export default new Vuex.Store({
     //删除所有
     removeAllTab({ commit },router) {
       commit('removeAllTab',router)
+    },
+    //添加routers
+    addRouters({commit},routers){
+      commit('addRouters',routers)
     }
   },
   getters: {

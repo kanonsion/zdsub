@@ -9,50 +9,21 @@
         :collapse-transition="true"
         :unique-opened="true"
         :router="true"
-        :default-active="$route.path"
+        :default-active="detail($route.path)"
         @select="selectmenu"
       >
         <!--  -->
-        <el-menu-item index="/layout/index">
-          <i class="el-icon-setting"></i>
-          <span slot="title">主页</span>
-        </el-menu-item>
-        <el-submenu index="1">
+        <el-submenu v-for="(item, index) in list" :key="index" :index="item.id">
           <template slot="title">
             <i class="el-icon-location"></i>
-            <span>系统管理</span>
+            <span>{{item.menu_name}}</span>
           </template>
           <el-menu-item
-            v-for="(item, index) in this.$store.state.routers"
-            :key="index"
-            :index="item.path"
-          >{{item.name}}</el-menu-item>
+            v-for="children in item.childrens"
+            :key="children.id"
+            :index="'/layout/'+children.menu_url"
+          >{{children.menu_name}}</el-menu-item>
         </el-submenu>
-
-        <el-submenu index='2'>
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>援藏高校</span>
-          </template>
-          <el-menu-item index="/layout/school">
-            学校管理
-          </el-menu-item>
-        </el-submenu>
-        
-        <el-submenu index='3'>
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>援藏工作</span>
-          </template>
-        </el-submenu>
-
-        <el-submenu index='4'>
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>招聘管理</span>
-          </template>
-        </el-submenu>
-
       </el-menu>
     </el-aside>
   </div>
@@ -60,7 +31,14 @@
 
 <script>
 import { constants } from "crypto";
+import { getMenu } from "./../../../api/layout";
 export default {
+  data() {
+    return {
+      list: [],
+      routers: []
+    };
+  },
   methods: {
     selectmenu(key) {
       let router = this.$store.state.routers;
@@ -88,18 +66,45 @@ export default {
           }
         }
       };
-      navTitle(key, router);
+      navTitle(this.detail(key), router);
       this.$store.dispatch("addTab", {
-        path: `${key}`,
+        path: `${this.detail(key)}`,
         name: name
       });
     },
+    async _getMenu() {
+      let res = await getMenu();
+      let { status, data } = res.data;
+      this.list = data;
+      this.getRouters(data);
+    },
+    /* 处理key */
+    detail(key) {
+      if(key.indexOf("/", 8) === -1) return key
+      return key.substring(0, key.indexOf("/", 8));
+    },
+    getRouters(data) {
+      let _this = this;
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].childrens.length; j++) {
+          let item = data[i].childrens[j];
+          _this.routers.push({
+            path: '/layout/' + item.menu_url,
+            name: item.menu_name
+          });
+        }
+      }
+      _this.$store.dispatch("addRouters", _this.routers);
+    }
   },
   watch: {
     // 监听浏览器直接输入路由，将此路由添加到tabnavBox
     "$route.path": function(key) {
-      this.selectmenu(key);
+      this.selectmenu(this.detail(key));
     }
+  },
+  mounted() {
+    this._getMenu();
   }
 };
 </script>
