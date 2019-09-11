@@ -61,7 +61,7 @@ export default {
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.data;
       this.list = resultList;
-      console.log(this.list)
+      console.log(this.list);
       this.pagination = {
         size: pageSize,
         total: totalCount,

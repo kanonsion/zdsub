@@ -14,11 +14,13 @@ import index from './views/system/index'
 /* school */
 import laySchool from './views/university/school'
 import schooledit from './views/university/school/edit'
+import schoollook from './views/university/school/look'
 import schoolist from './views/university/school/list'
 import schooladd from './views/university/school/add'
 /* advertise */
 import layadver from './views/advertise/adver'
 import adveredit from './views/advertise/adver/edit'
+import adverlook from './views/advertise/adver/look'
 import adverlist from './views/advertise/adver/list'
 import adveradd from './views/advertise/adver/add'
 /* work */
@@ -98,6 +100,11 @@ const router = new Router({
               component: schooledit,
               name: '学校管理',
             },
+            {
+              path: '/layout/school/look/:id',
+              component: schoollook,
+              name: '学校管理',
+            },
           ],
           redirect: '/layout/school/list'
         },
@@ -122,6 +129,11 @@ const router = new Router({
               component: adveredit,
               name: '人才引进',
             },
+            {
+              path: '/layout/adver/look/:id',
+              component: adverlook,
+              name: '人才引进',
+            }
           ],
           redirect: '/layout/adver/list'
         },
@@ -145,12 +157,15 @@ const router = new Router({
               path: '/layout/process/edit/:id',
               component: processedit,
               name: '路线管理',
-            },
+            }
           ],
           redirect: '/layout/process/list'
         }
       ]
     },
+
+
+
     /*  */
     {
       path: '/home',
@@ -197,8 +212,13 @@ const router = new Router({
   ]
 })
 
-/* router.beforeEach((to, from, next)=>{
-  
+/* router.beforeEach((to, from, next) => {
+  let token = localStorage.token ? true : false
+  if (token || to.path === '/login' || to.path === '/home') {
+    next()
+  } else {
+    next('/home')
+  }
 }) */
 
 export default router

@@ -11,11 +11,12 @@
         :router="true"
         :default-active="detail($route.path)"
         @select="selectmenu"
+        :collapse="collapse"
       >
         <!--  -->
         <el-submenu v-for="(item, index) in list" :key="index" :index="item.id">
           <template slot="title">
-            <i class="el-icon-location"></i>
+            <i :class="item.icon"></i>
             <span>{{item.menu_name}}</span>
           </template>
           <el-menu-item
@@ -30,7 +31,6 @@
 </template>
 
 <script>
-import { constants } from "crypto";
 import { getMenu } from "./../../../api/layout";
 export default {
   data() {
@@ -39,6 +39,7 @@ export default {
       routers: []
     };
   },
+  props: ["collapse"],
   methods: {
     selectmenu(key) {
       let router = this.$store.state.routers;
@@ -76,11 +77,15 @@ export default {
       let res = await getMenu();
       let { status, data } = res.data;
       this.list = data;
+      let icons = ['el-icon-menu','el-icon-school','el-icon-s-release','el-icon-s-custom']
+      this.list.forEach((item,index) => {
+        item['icon'] = icons[index]
+      });
       this.getRouters(data);
     },
     /* 处理key */
     detail(key) {
-      if(key.indexOf("/", 8) === -1) return key
+      if (key.indexOf("/", 8) === -1) return key;
       return key.substring(0, key.indexOf("/", 8));
     },
     getRouters(data) {
@@ -89,7 +94,7 @@ export default {
         for (let j = 0; j < data[i].childrens.length; j++) {
           let item = data[i].childrens[j];
           _this.routers.push({
-            path: '/layout/' + item.menu_url,
+            path: "/layout/" + item.menu_url,
             name: item.menu_name
           });
         }

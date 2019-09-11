@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {Message } from 'element-ui'
+import router from './../router'
 
 axios.defaults.baseURL = 'http://localhost:8080/zdsub'
 //请求头
@@ -8,10 +9,12 @@ axios.defaults.headers.post['Content-Type'] = 'application/json'
 // 添加请求拦截器
 axios.interceptors.request.use(function (config) {
   // 在发送请求之前做些什么
+  if(localStorage.token){
+    config.headers.Authorization = localStorage.token
+  }
   return config;
 }, function (error) {
   // 对请求错误做些什么
-  console.log(error)
   return Promise.reject(error);
 });
 
@@ -26,8 +29,11 @@ axios.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   // 对响应错误做点什么
-  console.log(error)
-  if(error.status === 401) alert(401)
+  if(error.response.status === 401){
+    Message.error('请重新登录')
+    router.push('/login')
+    return false
+  }
   return Promise.reject(error);
 });
 

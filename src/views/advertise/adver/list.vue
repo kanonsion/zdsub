@@ -11,14 +11,15 @@
     <el-table :data="list" style="width: 100%" :stripe="true">
       <el-table-column prop="id" label="编号"></el-table-column>
       <el-table-column prop="title" label="标题"></el-table-column>
-      <el-table-column prop="school.sch_name" label="发布学校"></el-table-column>
-      <el-table-column prop="read_num" label="阅读量"></el-table-column>
+      <el-table-column prop="school.sch_name" label="发布学校" width="100px"></el-table-column>
+      <el-table-column prop="read_num" label="阅读量" width="80px"></el-table-column>
       <el-table-column prop="update_time" label="最后更新时间"></el-table-column>
-      <el-table-column prop="school.create_user" label="发布者"></el-table-column>
+      <el-table-column prop="school.create_user" label="发布者" width="80px"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -92,6 +93,9 @@ export default {
     },
     handleEdit(index, row) {
       this.$router.push("/layout/adver/edit/" + row.id);
+    },
+    handleLook(index, row) {
+      this.$router.push("/layout/adver/look/" + row.id);
     }
   },
   mounted() {

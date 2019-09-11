@@ -117,6 +117,7 @@ export default {
 @import url("./../common/css/mixin.less");
 #home {
   position: relative;
+  min-width: 1500px;
   .navwrapper {
     .abs(100%);
     z-index: 10;
@@ -246,7 +247,7 @@ export default {
   .footer {
     top: 1280px;
     background-size: cover;
-    .bg('https://www.tsinghua.edu.cn/publish/thu2018/images/footer.jpg',200px);
+    .bg("https://www.tsinghua.edu.cn/publish/thu2018/images/footer.jpg", 200px);
     .abs(100%);
     .copyright {
       z-index: 10;

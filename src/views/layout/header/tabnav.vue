@@ -65,7 +65,7 @@ export default {
     },
     /* 处理key */
     detail(key) {
-      if(key.indexOf("/", 8) === -1) return key
+      if (key.indexOf("/", 8) === -1) return key;
       return key.substring(0, key.indexOf("/", 8));
     }
   },
@@ -84,6 +84,7 @@ export default {
   },
   mounted() {
     let { fullPath, name } = this.$router.currentRoute;
+    if(fullPath.indexOf('?')) return
     this.$store.dispatch("addTab", {
       path: this.detail(fullPath),
       name: name

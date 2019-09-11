@@ -17,6 +17,7 @@
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button type="info" size="mini" @click="handlelook(scope.$index, scope.row)">查看</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -90,6 +91,9 @@ export default {
     },
     handleEdit(index, row) {
       this.$router.push("/layout/school/edit/" + row.id);
+    },
+    handlelook(index, row) {
+      this.$router.push("/layout/school/look/" + row.id);
     }
   },
   mounted() {

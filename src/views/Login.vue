@@ -65,10 +65,13 @@ export default {
     async _login(users) {
       let res = await login(users);
       if (res) {
-        let { status, msg } = res.data;
+        let { status, msg, data } = res.data;
+        let { authorization } = res.headers;
+        localStorage.token = authorization;
         if (status === 200) {
           Message.success(msg);
-          this.$router.push('/layout/index')
+          this.$router.push({ path: "/layout?" });
+          localStorage.user_name = data
         }
       }
     }
