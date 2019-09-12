@@ -1,5 +1,5 @@
 <template>
   <div>
-    role
+    <router-view></router-view>
   </div>
 </template>

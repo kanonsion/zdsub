@@ -14,7 +14,6 @@ export default new Vuex.Store({
   },
   mutations: {
     addTab(state, tab) {
-      console.log(tab)
       for (const item of state.tabnavBox) {
         if (item.path === tab.path || (tab.path === null && tab.name === null)) {
           return false

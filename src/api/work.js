@@ -24,3 +24,14 @@ export function edit(data) {
 export function add(data) {
   return axios.post('/process/add', JSON.stringify(data))
 }
+
+/* 上传图片 */
+export function upload(file) {
+  console.log(file.getAll('file'))
+  return axios.post('/policy/upload', file, { 'Content-Type': 'multipart/form-data' })
+}
+
+/* 删除图片 */
+export function uploadRemove(relaPath) {
+  return axios.get('/policy/uploadRemove', { params: { relaPath } })
+}
