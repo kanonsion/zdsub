@@ -8,10 +8,6 @@ export default[
     component: Home => require(['@/views/Home'], Home)
   },
   {
-    path: '/login',
-    component: Login => require(['@/views/Login'], Login)
-  },
-  {
     path: '/home/work',
     component: work => require(['@/views/home/work'], work)
   },

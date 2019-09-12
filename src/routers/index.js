@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import layout from '@/views/layout/layout'
+import Login from '@/views/Login'
 
 /* 导入route */
 import home from './home'
@@ -10,11 +12,6 @@ import university from './university'
 import work from './work'
 
 Vue.use(Router)
-
-const routerPush = Router.prototype.push
-Router.prototype.push = function push(location) {
-  return routerPush.call(this, location).catch(error => error)
-}
 
 const router = new Router({
   mode: 'history',
@@ -30,7 +27,11 @@ const router = new Router({
         ...university
       ]
     },
-    ...home
+    ...home,
+    {
+      path: '/login',
+      component: Login,
+    }
   ]
 })
 export default router

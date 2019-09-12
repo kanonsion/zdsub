@@ -1,40 +1,38 @@
 import axios from 'axios'
-import {Message } from 'element-ui'
-import router from './../router'
+import { Message } from 'element-ui'
+import router from './../routers'
 
 axios.defaults.baseURL = 'http://localhost:8080/zdsub'
 //请求头
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 // 添加请求拦截器
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(config => {
   // 在发送请求之前做些什么
-  if(localStorage.token){
+  if (localStorage.token) {
     config.headers.Authorization = localStorage.token
   }
   return config;
-}, function (error) {
+}, error => {
   // 对请求错误做些什么
   return Promise.reject(error);
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(response => {
   // 对响应数据做点什么
   let { status, msg } = response.data;
-  if(status === 500) {
+  if (status === 500) {
     Message.error(msg || '服务器错误')
-    return false
   }
   return response
-}, function (error) {
+}, error => {
   // 对响应错误做点什么
-  if(error.response.status === 401){
+  console.log(error)
+  if (error.response.status === 401) {
     Message.error('请重新登录')
     router.push('/login')
-    return false
   }
   return Promise.reject(error);
 });
-
 export default axios
