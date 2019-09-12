@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getManager, remove } from "./../../../api/system";
+import { getManager, delById } from "./../../../api/system";
 import { Message } from "element-ui";
 export default {
   data() {
@@ -66,7 +66,7 @@ export default {
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.page;
       this.list = resultList;
-      console.log(this.list);
+      console.log(res)
       this.pagination = {
         size: pageSize,
         total: totalCount,
@@ -86,7 +86,7 @@ export default {
     /* 删除 */
     async handleDelete(index, row) {
       let { id } = row;
-      let res = await remove(id);
+      let res = await delById(id);
       let { status } = res.data;
       if (status === 200) {
         let { size, curr } = this.pagination;

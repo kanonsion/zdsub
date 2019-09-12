@@ -15,7 +15,6 @@
         <el-input v-model="adver.title"></el-input>
       </el-form-item>
       <el-form-item label="学校">
-        <!-- {{adver.school.sch_name}} -->
         {{school.sch_name}}
       </el-form-item>
       <el-form-item label="详细信息">

@@ -20,6 +20,8 @@
 </template>
 
 <script>
+import { logout } from "@/api/home";
+import { Message } from "element-ui";
 import tabnav from "./tabnav";
 export default {
   data() {
@@ -27,7 +29,7 @@ export default {
       name: ""
     };
   },
-  props:['handleMenu'],
+  props: ["handleMenu"],
   components: {
     tabnav
   },
@@ -39,9 +41,18 @@ export default {
           break;
 
         case "exit":
-          localStorage.token = "";
-          this.$router.replace("/home");
+          this._logout();
           break;
+      }
+    },
+    async _logout() {
+      let res = await logout(localStorage.token);
+      console.log(res);
+      let { status, msg } = res.data;
+      if (status === 200) {
+        Message.success(msg);
+        localStorage.token = "";
+        this.$router.push({ path: "/home" });
       }
     }
   },

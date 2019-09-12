@@ -19,7 +19,7 @@
         <el-input v-model="manager.telephone"></el-input>
       </el-form-item>
       <el-form-item label="级别">
-        <el-select placeholder="请选择级别" v-model="roleId" @change="managerChange($event)">
+        <el-select placeholder="请选择级别" v-model="manager.roleName" @change="managerChange($event)">
           <el-option
             v-for="(item, index) in roleList"
             :key="index"
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { get, add, roleList } from "./../../../api/system";
+import { get, update as edit, roleList } from "./../../../api/system";
 import { Message } from "element-ui";
 var validateTelephone = (rule, value, callback) => {
   if (value === "") {
@@ -65,19 +65,20 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let { user_name, pass_word, sch_id, telephone, roleId } = this.manager;
-          this._add({
+          let { id,user_name, pass_word, sch_id, telephone, roleId } = this.manager;
+          this._edit({
             user_name,
             pass_word,
             schId:sch_id,
             telephone,
-            roleId
+            roleId,
+            id
           });
         }
       });
     },
-    async _add(data) {
-      let res = await add(data);
+    async _edit(data) {
+      let res = await edit(data);
       let { status } = res.data;
       if (status === 200) {
         Message.success("修改成功");

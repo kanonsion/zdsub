@@ -6,8 +6,8 @@ export function getManager(page) {
 }
 
 /* 删除单个 */
-export function remove(id) {
-  return axios.get('/school/remove/' + id)
+export function delById(id) {
+  return axios.get('/manager/delById?id=' + id)
 }
 
 /* 查询 */
@@ -19,6 +19,11 @@ export function get(id) {
 export function add(data) {
   console.log(JSON.stringify(data))
   return axios.post('/manager/add', JSON.stringify(data))
+}
+
+export function update(data) {
+  console.log(JSON.stringify(data))
+  return axios.post('/manager/update', JSON.stringify(data))
 }
 
 /* 级别列表 */

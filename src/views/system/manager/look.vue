@@ -1,18 +1,13 @@
 <template>
   <div>
-    <el-form
-      :model="adver"
-      ref="ruleForm"
-      label-width="100px"
-      class="form"
-      size="small"
-    >
-      <el-form-item label="学校编号:">{{adver.id}}</el-form-item>
-      <el-form-item label="标题:" prop="sch_name">{{adver.title}}</el-form-item>
-      <el-form-item label="学校:">{{school.sch_name}}</el-form-item>
-      <el-form-item label="详细信息:">
-        <div v-html="adver.context"></div>
-      </el-form-item>
+    <el-form :model="manager" ref="ruleForm" label-width="100px" class="form" size="small">
+      <el-form-item label="管理员编号">{{manager.id}}</el-form-item>
+      <el-form-item label="管理员名称	">{{manager.user_name}}</el-form-item>
+      <el-form-item label="所属学校">{{manager.schName}}</el-form-item>
+      <el-form-item label="电话">{{manager.telephone}}</el-form-item>
+      <el-form-item label="级别">{{manager.roleName}}</el-form-item>
+      <el-form-item label="创建时间">{{manager.create_time}}</el-form-item>
+      <el-form-item label="创建者	">{{manager.user_name}}</el-form-item>
       <el-form-item>
         <el-button @click="back">返回列表</el-button>
       </el-form-item>
@@ -21,12 +16,12 @@
 </template>
 
 <script>
-import { get } from "./../../../api/advertise";
+import { get, roleList } from "./../../../api/system";
+import { Message } from "element-ui";
 export default {
   data() {
     return {
-      adver: {},
-      school:{}
+      manager: {},
     };
   },
   methods: {
@@ -36,12 +31,14 @@ export default {
     async _get(id) {
       let res = await get(id);
       let { data } = res.data;
-      this.adver = data;
-      this.school = this.adver.school
-    }
+      this.manager = data;
+    },
   },
   mounted() {
     this._get(this.$route.params.id);
   }
 };
 </script>
+
+<style lang="less">
+</style>

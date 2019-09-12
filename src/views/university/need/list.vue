@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getManager, remove } from "./../../../api/system";
+import { getNeed, removeNeed } from "./../../../api/school";
 import { Message } from "element-ui";
 export default {
   data() {
@@ -56,14 +56,15 @@ export default {
     };
   },
   methods: {
-    async _getManager(curr, size, condition) {
-      let res = await getManager({
+    async _getNeed(curr, size, condition) {
+      let res = await getNeed({
         pageNo: curr,
         pageSize: size,
         condition: {
           user_name:condition
         }
       });
+      console.log(res)
       let { resultList, pageNo, pageSize, totalCount } = res.data.page;
       this.list = resultList;
       console.log(this.list);
@@ -76,12 +77,12 @@ export default {
     handleSizeChange(val) {
       let { size, curr } = this.pagination;
       size = val;
-      this._getManager(curr, size, this.user_name);
+      this._getNeed(curr, size, this.user_name);
     },
     handleCurrentChange(val) {
       let { size, curr } = this.pagination;
       curr = (val - 1) * 5;
-      this._getManager(curr, size, this.user_name);
+      this._getNeed(curr, size, this.user_name);
     },
     /* 删除 */
     async handleDelete(index, row) {
@@ -90,7 +91,7 @@ export default {
       let { status } = res.data;
       if (status === 200) {
         let { size, curr } = this.pagination;
-        this._getManager(curr, size, this.user_name);
+        this._getNeed(curr, size, this.user_name);
         Message.success("删除成功");
       }
     },
@@ -102,13 +103,13 @@ export default {
     },
     select() {
       let { name } = this.ruleForm;
-      this._getManager(0, 5, name)
+      this._getNeed(0, 5, name)
       this.$router.push({ path: "/layout/manager/list/", query: { name } });
     }
   },
   mounted() {
     this.user_name = this.$route.query.name
-    this._getManager(0, 5, this.user_name);
+    this._getNeed(0, 5, this.user_name);
   }
 };
 </script>
