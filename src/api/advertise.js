@@ -25,3 +25,9 @@ export function add(data){
   return axios.post('/adver/add',JSON.stringify(data))
 }
 
+
+/* enterName */
+/* 查询 */
+export function getenterName(page) {
+  return axios.post('/enterName/getPage', JSON.stringify(page))
+}

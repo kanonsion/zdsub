@@ -3,8 +3,9 @@ import adverlist from '@/views/advertise/adver/list'
 import adveradd from '@/views/advertise/adver/add'
 import adveredit from '@/views/advertise/adver/look'
 import adverlook from '@/views/advertise/adver/look'
+import enterName from '@/views/advertise/enterName'
 
-export default[
+export default [
   {
     path: '/layout/adver',
     component: adver,
@@ -32,5 +33,10 @@ export default[
       }
     ],
     redirect: '/layout/adver/list'
+  },
+  {
+    path: '/layout/enterName',
+    component: enterName,
+    name: '援藏人员',
   }
 ]

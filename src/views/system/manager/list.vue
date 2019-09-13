@@ -107,7 +107,7 @@ export default {
     }
   },
   mounted() {
-    this.user_name = this.$route.query.name
+    this.user_name = this.$route.query.name || ''
     this._getManager(0, 5, this.user_name);
   }
 };

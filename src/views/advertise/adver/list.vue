@@ -3,7 +3,7 @@
     <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" size="small">
       <el-form-item label="标题:" prop="name" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="select">查询</el-button>
         <el-button type="success" @click="$router.push('/layout/adver/add')">新增学校</el-button>
       </el-form-item>
     </el-form>
@@ -53,14 +53,18 @@ export default {
         size: 0, //每页数量
         total: 0, //总
         curr: 0 // 当前
-      }
+      },
+      title: ""
     };
   },
   methods: {
-    async _getAdver(curr, size) {
+    async _getAdver(curr, size, condition) {
       let res = await getAdver({
         pageNo: curr,
-        pageSize: size
+        pageSize: size,
+        condition: {
+          title: condition
+        }
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.data;
       this.list = resultList;
@@ -96,10 +100,16 @@ export default {
     },
     handleLook(index, row) {
       this.$router.push("/layout/adver/look/" + row.id);
+    },
+    select() {
+      let { name } = this.ruleForm;
+      this._getManager(0, 5, name);
+      this.$router.push({ path: "/layout/manager/list/", query: { name } });
     }
   },
   mounted() {
-    this._getAdver(0, 5);
+    this.title = this.$route.query.name || '';
+    this._getAdver(0, 5, this.title);
   }
 };
 </script>
