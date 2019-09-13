@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" size="small">
-      <el-form-item label="标题:" prop="name" class="name-input">
+    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" size="small">
+      <el-form-item label="标题:" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="select">查询</el-button>
         <el-button type="success" @click="$router.push('/layout/process/add')">新增路线</el-button>
       </el-form-item>
     </el-form>
@@ -43,21 +43,22 @@ export default {
       ruleForm: {
         name
       },
-      rules: {
-        name: [{ required: true, message: "请输入标题", trigger: "blur" }]
-      },
       pagination: {
         size: 0, //每页数量
         total: 0, //总
         curr: 0 // 当前
-      }
+      },
+      path_name: ""
     };
   },
   methods: {
-    async _getProcess(curr, size) {
+    async _getProcess(curr, size, condition) {
       let res = await getProcess({
         pageNo: curr,
-        pageSize: size
+        pageSize: size,
+        condition: {
+          path_name: condition
+        }
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.data;
       this.list = resultList;
@@ -71,12 +72,12 @@ export default {
     handleSizeChange(val) {
       let { size, curr } = this.pagination;
       size = val;
-      this._getProcess(curr, size);
+      this._getProcess(curr, size, this.path_name);
     },
     handleCurrentChange(val) {
       let { size, curr } = this.pagination;
       curr = (val - 1) * 5;
-      this._getProcess(curr, size);
+      this._getProcess(curr, size, this.path_name);
     },
     /* 删除 */
     async handleDelete(index, row) {
@@ -85,16 +86,22 @@ export default {
       let { status } = res.data;
       if (status === 200) {
         let { size, curr } = this.pagination;
-        this._getProcess(curr, size);
+        this._getProcess(curr, size, this.path_name);
         Message.success("删除成功");
       }
     },
     handleEdit(index, row) {
       this.$router.push("/layout/process/edit/" + row.id);
+    },
+    select() {
+      let { name } = this.ruleForm;
+      this._getProcess(0, 5, name);
+      this.$router.push({ path: "/layout/process/list/", query: { name } });
     }
   },
   mounted() {
-    this._getProcess(0, 5);
+    this.path_name = this.$route.query.name || "";
+    this._getProcess(0, 5, this.path_name);
   }
 };
 </script>

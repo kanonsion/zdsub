@@ -1,9 +1,9 @@
 <template>
   <div>
-    <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" size="small">
-      <el-form-item label="学校名称:" prop="name" class="name-input">
+    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" size="small">
+      <el-form-item label="学校名称:" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
-        <el-button type="primary">查询</el-button>
+        <el-button type="primary" @click="select">查询</el-button>
         <el-button type="success" @click="$router.push('/layout/school/add')">新增学校</el-button>
       </el-form-item>
     </el-form>
@@ -51,14 +51,18 @@ export default {
         size: 0, //每页数量
         total: 0, //总
         curr: 0 // 当前
-      }
+      },
+      sch_name: ""
     };
   },
   methods: {
-    async _getSchool(curr, size) {
+    async _getSchool(curr, size, condition) {
       let res = await getSchool({
         pageNo: curr,
-        pageSize: size
+        pageSize: size,
+        condition: {
+          sch_name: condition
+        }
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.data;
       this.list = resultList;
@@ -71,12 +75,12 @@ export default {
     handleSizeChange(val) {
       let { size, curr } = this.pagination;
       size = val;
-      this._getSchool(curr, size);
+      this._getSchool(curr, size, this.sch_name);
     },
     handleCurrentChange(val) {
       let { size, curr } = this.pagination;
       curr = (val - 1) * 5;
-      this._getSchool(curr, size);
+      this._getSchool(curr, size, this.sch_name);
     },
     /* 删除 */
     async handleDelete(index, row) {
@@ -85,7 +89,7 @@ export default {
       let { status } = res.data;
       if (status === 200) {
         let { size, curr } = this.pagination;
-        this._getSchool(curr, size);
+        this._getSchool(curr, size, this.sch_name);
         Message.success("删除成功");
       }
     },
@@ -94,9 +98,15 @@ export default {
     },
     handlelook(index, row) {
       this.$router.push("/layout/school/look/" + row.id);
+    },
+    select() {
+      let { name } = this.ruleForm;
+      this._getSchool(0, 5, name);
+      this.$router.push({ path: "/layout/school/list/", query: { name } });
     }
   },
   mounted() {
+    this.sch_name = this.$route.query.name || "";
     this._getSchool(0, 5);
   }
 };

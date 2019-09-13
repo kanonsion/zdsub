@@ -4,7 +4,7 @@
       <el-form-item label="标题:"  class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
         <el-button type="primary" @click="select">查询</el-button>
-        <el-button type="success" @click="$router.push('/layout/manager/add')">新增学校</el-button>
+        <el-button type="success" @click="$router.push('/layout/policy/add')">新增</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格 -->
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getManager, remove } from "./../../../api/system";
+import { getpolicy, delById_policy as remove } from "@/api/work";
 import { Message } from "element-ui";
 export default {
   data() {
@@ -52,16 +52,16 @@ export default {
         total: 0, //总
         curr: 0 // 当前
       },
-      user_name: ''
+      title: ''
     };
   },
   methods: {
-    async _getManager(curr, size, condition) {
-      let res = await getManager({
+    async _getpolicy(curr, size, condition) {
+      let res = await getpolicy({
         pageNo: curr,
         pageSize: size,
         condition: {
-          user_name:condition
+          title:condition
         }
       });
       let { resultList, pageNo, pageSize, totalCount } = res.data.page;
@@ -76,12 +76,12 @@ export default {
     handleSizeChange(val) {
       let { size, curr } = this.pagination;
       size = val;
-      this._getManager(curr, size, this.user_name);
+      this._getpolicy(curr, size, this.title);
     },
     handleCurrentChange(val) {
       let { size, curr } = this.pagination;
       curr = (val - 1) * 5;
-      this._getManager(curr, size, this.user_name);
+      this._getpolicy(curr, size, this.title);
     },
     /* 删除 */
     async handleDelete(index, row) {
@@ -90,25 +90,25 @@ export default {
       let { status } = res.data;
       if (status === 200) {
         let { size, curr } = this.pagination;
-        this._getManager(curr, size, this.user_name);
+        this._getpolicy(curr, size, this.title);
         Message.success("删除成功");
       }
     },
     handleEdit(index, row) {
-      this.$router.push("/layout/manager/edit/" + row.id);
+      this.$router.push("/layout/policy/edit/" + row.id);
     },
     handleLook(index, row) {
-      this.$router.push("/layout/manager/look/" + row.id);
+      this.$router.push("/layout/policy/look/" + row.id);
     },
     select() {
       let { name } = this.ruleForm;
-      this._getManager(0, 5, name)
-      this.$router.push({ path: "/layout/manager/list/", query: { name } });
+      this._getpolicy(0, 5, name)
+      this.$router.push({ path: "/layout/policy/list/", query: { name } });
     }
   },
   mounted() {
-    this.user_name = this.$route.query.name
-    this._getManager(0, 5, this.user_name);
+    this.title = this.$route.query.name || ''
+    this._getpolicy(0, 5, this.title);
   }
 };
 </script>
