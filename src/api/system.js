@@ -17,16 +17,45 @@ export function get(id) {
 
 /* 修改 */
 export function add(data) {
-  console.log(JSON.stringify(data))
   return axios.post('/manager/add', JSON.stringify(data))
 }
 
 export function update(data) {
-  console.log(JSON.stringify(data))
   return axios.post('/manager/update', JSON.stringify(data))
 }
 
 /* 级别列表 */
 export function roleList() {
   return axios.get('/role/findAll')
+}
+
+
+/* role */
+
+/* 查询列表 */
+export function getrole(page) {
+  return axios.post('/role/getPage', JSON.stringify(page))
+}
+
+/* 删除单个 */
+export function delById_role(id) {
+  return axios.get('/role/delById?id=' + id)
+}
+
+/* 查询 */
+export function get_role(id) {
+  return axios.get('role/findById?id=' + id)
+}
+
+/* 修改 */
+export function add_role(data) {
+  return axios.post('/role/add', JSON.stringify(data))
+}
+
+export function update_role(data) {
+  return axios.post('/role/update', JSON.stringify(data))
+}
+
+export function findNotParent(){
+  return axios.get('/menu/findNotParent')
 }
