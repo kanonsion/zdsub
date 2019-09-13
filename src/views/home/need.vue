@@ -1,12 +1,52 @@
 <template>
   <div>
-    <list />
+    <list
+      :list="list"
+      :pagination="pagination"
+      @handleSizeChange="handleSizeChange"
+      @handleCurrentChange="handleCurrentChange"
+    />
   </div>
 </template>
 
 <script>
 import list from "./../../components/homelist";
+import { need, get_need as get } from "@/api/home";
 export default {
+  data() {
+    return {
+      list: {}
+    };
+  },
+  methods: {
+    async _need(curr, size) {
+      let res = await need({
+        pageNo: curr,
+        pageSize: size
+      });
+      let { resultList, pageNo, pageSize, totalCount } = res.data.data;
+      this.list = resultList;
+      console.log(this.list);
+      this.pagination = {
+        size: pageSize,
+        total: totalCount,
+        curr: pageNo
+      };
+    },
+    handleSizeChange(val) {
+      let { size, curr } = this.pagination;
+      size = val;
+      this._need(curr, size);
+    },
+    handleCurrentChange(val) {
+      let { size, curr } = this.pagination;
+      curr = (val - 1) * 3;
+      this._need(curr, size);
+    }
+  },
+  mounted() {
+    this._need(0, 3);
+  },
   components: {
     list
   }

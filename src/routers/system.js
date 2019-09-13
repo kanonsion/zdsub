@@ -43,7 +43,7 @@ export default [
         name: '权限管理'
       },
       {
-        path: '/layout/role/add/:id',
+        path: '/layout/role/add',
         component: add => require(['@/views/system/role/add'], add),
         name: '权限管理'
       },

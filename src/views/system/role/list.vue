@@ -4,14 +4,14 @@
       <el-form-item label="标题:"  class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
         <el-button type="primary" @click="select">查询</el-button>
-        <el-button type="success" @click="$router.push('/layout/role/add')">新增学校</el-button>
+        <el-button type="success" @click="$router.push('/layout/role/add')">新增权限</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格 -->
     <el-table :data="list" style="width: 100%" :stripe="true">
       <el-table-column prop="id" label="id" width="100px"></el-table-column>
       <el-table-column prop="role_name" label="权限名称" ></el-table-column>
-      <el-table-column prop="cdescriprition" label="描述" ></el-table-column>
+      <el-table-column prop="cdescription" label="描述" ></el-table-column>
       <el-table-column prop="context" label="备注" ></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">

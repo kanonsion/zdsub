@@ -1,92 +1,111 @@
 <template>
   <div>
-    <el-tree :data="findNotParent" :props="defaultProps" show-checkbox></el-tree>
-    <el-button type="success" size="mini" style="margin-top:50px">提交</el-button>
+    <el-form
+      :model="role"
+      :rules="rules"
+      ref="ruleForm"
+      label-width="100px"
+      class="form"
+      size="small"
+    >
+      <el-form-item label="权限名称" prop="role_name">
+        <el-input v-model="role.role_name"></el-input>
+      </el-form-item>
+      <el-form-item label="描述">
+        <el-input v-model="role.cdescriprition"></el-input>
+      </el-form-item>
+      <el-form-item label="备注">
+        <el-input v-model="role.context"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-tree
+          :data="findNotParent"
+          node-key="id"
+          :props="defaultProps"
+          show-checkbox
+          :default-checked-keys="ids"
+          ref="tree"
+        ></el-tree>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+        <el-button @click="back">返回列表</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
 <script>
 import {
-  get_role as get,
   update_role as edit,
-  findNotParent
+  findNotParent,
+  get_role as get
 } from "./../../../api/system";
 import { Message } from "element-ui";
-var validateTelephone = (rule, value, callback) => {
-  if (value === "") {
-    callback(new Error("请输入电话号码"));
-  } else {
-    if (!/^1[3456789]\d{9}$/.test(value)) {
-      callback(new Error("请输入正确的电话号码"));
-    }
-    callback();
-  }
-};
 export default {
   data() {
     return {
       role: {},
       findNotParent: [],
-      rules: {
-        telephone: [{ validator: validateTelephone, trigger: "blur" }]
-      },
+      ids: [],
       roleId: "",
       defaultProps: {
         children: "children",
-        label: "menu_name"
+        label: "menu_name",
+        id: "id"
+      },
+      rules: {
+        role_name: [
+          { required: true, message: "请输入权限名称", trigger: "blur" }
+        ]
       }
     };
   },
   methods: {
+    submit() {
+      this._edit;
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let {
-            id,
-            user_name,
-            pass_word,
-            sch_id,
-            telephone,
-            roleId
-          } = this.role;
+          let ids = this.$refs.tree.getCheckedKeys();
+          let role = this.role;
           this._edit({
-            user_name,
-            pass_word,
-            schId: sch_id,
-            telephone,
-            roleId,
-            id
+            ids,
+            ...role
           });
         }
       });
     },
     async _edit(data) {
       let res = await edit(data);
+      console.log(res)
       let { status } = res.data;
       if (status === 200) {
         Message.success("修改成功");
         this.$router.go(-1);
       }
     },
+    async _get(id) {
+      let res = await get(id);
+      this.role = res.data.data;
+    },
     back() {
       this.$router.go(-1);
     },
-    async _get(id) {
-      let res = await get(id);
-      let { data } = res.data;
-      this.role = data;
-      console.log(this.role);
-    },
-    async _findNotParent() {
-      let res = await findNotParent();
+    async _findNotParent(id) {
+      let res = await findNotParent(id);
       let data = res.data.data;
-      this.findNotParent = data;
-      console.log(this.findNotParent);
+      let { ids, menus } = data;
+      console.log(data);
+      console.log(menus);
+      this.ids = ids;
+      this.findNotParent = menus;
     }
   },
   mounted() {
     this._get(this.$route.params.id);
-    this._findNotParent();
+    this._findNotParent(this.$route.params.id);
   }
 };
 </script>

@@ -56,6 +56,6 @@ export function update_role(data) {
   return axios.post('/role/update', JSON.stringify(data))
 }
 
-export function findNotParent(){
-  return axios.get('/menu/findNotParent')
+export function findNotParent(id) {
+  return axios.get('/menu/findNotParent', { params: { id } })
 }

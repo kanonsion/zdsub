@@ -11,22 +11,22 @@
       <div class="list">
         <ul>
           <!--  -->
-          <li @click="()=>{$router.push('/home')}">
-            <span>关于IPv6测试校园网断网的通知</span>
-            <span>2019-08-31 &nbsp; 10:51:58</span>
-          </li>
-          <li>
-            <span>关于IPv6测试校园网断网的通知</span>
-            <span>2019-08-31 &nbsp; 10:51:58</span>
-          </li>
-          <li>
-            <span>关于IPv6测试校园网断网的通知</span>
-            <span>2019-08-31 &nbsp; 10:51:58</span>
+          <li v-for="(item, index) in list" :key="index" @click="jump(item.id)">
+            <span>{{item.title || item.path_name}}</span>
+            <span>{{item.uptate_time || item.update_time}}</span>
           </li>
         </ul>
       </div>
       <!-- 分页 -->
-      <el-pagination background layout="prev, pager, next" :total="1000" class="pagination"></el-pagination>
+      <el-pagination
+        @size-change="$emit('handleSizeChange')"
+        @current-change="$emit('handleCurrentChange')"
+        :page-sizes="[3,6,9,12]"
+        :page-size="pagination.size"
+        layout="sizes, prev, pager, next"
+        :total="pagination.total"
+        class="pagination"
+      ></el-pagination>
     </section>
 
     <!-- footer  -->
@@ -42,7 +42,12 @@ export default {
     homeheader,
     homefooter
   },
-  props: {}
+  props: ["list", "pagination", "handleSizeChange", "handleCurrentChange"],
+  methods: {
+    jump(id) {
+      this.$router.push({ path: "/home/listshow/", query: { id } });
+    }
+  }
 };
 </script>
 
@@ -66,6 +71,7 @@ export default {
     margin-top: 20px;
     .list {
       margin-top: 40px;
+      min-height: 300px;
       ul {
         li {
           .center(100%);

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from './routers'
+
 
 Vue.use(Vuex)
 
@@ -14,6 +16,7 @@ export default new Vuex.Store({
   },
   mutations: {
     addTab(state, tab) {
+      if(tab.path === "/layout") return
       for (const item of state.tabnavBox) {
         if (item.path === tab.path || (tab.path === null && tab.name === null)) {
           return false
@@ -27,8 +30,12 @@ export default new Vuex.Store({
       })
       state.tabnavBox.splice(index, 1)
       if (tab.item.path === tab.fullPath) {
-        let url = state.tabnavBox[index] || state.tabnavBox[index - 1]
-        tab.router.push(url.path)
+        let url = state.tabnavBox[index] || state.tabnavBox[index - 1] || ''
+        if (url === '') {
+          router.push('/layout')
+        } else {
+          tab.router.push(url.path)
+        }
       }
     },
     openMenu(state, tab) {
@@ -36,22 +43,17 @@ export default new Vuex.Store({
     },
     removeOtherTab(state, tab) {
       for (const key in state.tabnavBox) {
-        if (key != 0 && state.tabnavBox[key].path != tab.item.path) {
+        console.log(1)
+        if (state.tabnavBox[key].path != tab.item.path) {
           state.tabnavBox.splice(key, 1)
         }
       }
-      let url = state.tabnavBox[1]
-      tab.router.push(url.path)
     },
-    removeAllTab(state,router) {
-      state.tabnavBox = [{
-        path: '/layout/index',
-        name: '主页'
-      }]
-      let url = state.tabnavBox[0]
-      router.push(url.path)
+    removeAllTab(state, router) {
+      state.tabnavBox = []
+      router.push('/layout')
     },
-    addRouters(state,routers){
+    addRouters(state, routers) {
       state.routers = routers
     }
   },
@@ -73,12 +75,12 @@ export default new Vuex.Store({
       commit('removeOtherTab', tab)
     },
     //删除所有
-    removeAllTab({ commit },router) {
-      commit('removeAllTab',router)
+    removeAllTab({ commit }, router) {
+      commit('removeAllTab', router)
     },
     //添加routers
-    addRouters({commit},routers){
-      commit('addRouters',routers)
+    addRouters({ commit }, routers) {
+      commit('addRouters', routers)
     }
   },
   getters: {

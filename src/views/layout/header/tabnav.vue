@@ -9,7 +9,7 @@
         @contextmenu.prevent="openMenu(item,$event,index)"
       >
         <router-link :to="item.path">{{item.name}}</router-link>
-        <i @click="removeTab(item,index)" class="el-icon-error" v-if="index !== 0"></i>
+        <i @click="removeTab(item,index)" class="el-icon-error"></i>
       </li>
     </transition-group>
 
@@ -48,7 +48,7 @@ export default {
     removeOtherTab(item) {
       this.$store.dispatch("removeOtherTab", {
         item,
-        fullPath: this.$route.fullPath,
+        fullPath: this.detail(this.$route.fullPath),
         router: this.$router
       });
     },
@@ -84,7 +84,9 @@ export default {
   },
   mounted() {
     let { fullPath, name } = this.$router.currentRoute;
-    if(fullPath.indexOf('?')) return
+    /* if(fullPath.indexOf('?')) return */
+    console.log(fullPath)
+    if (fullPath == "/layout") return;
     this.$store.dispatch("addTab", {
       path: this.detail(fullPath),
       name: name

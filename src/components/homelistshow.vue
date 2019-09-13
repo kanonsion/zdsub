@@ -37,7 +37,10 @@ export default {
   components: {
     homeheader,
     homefooter
-  }
+  },
+  mounted() {
+    console.log(this.route)
+  },
 };
 </script>
 
