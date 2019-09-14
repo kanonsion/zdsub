@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import homelistshow from "@/components/homelistshow";
+import homelistshow from "@/components/needlist";
 import { get_need as get } from "@/api/home";
 export default {
   data() {

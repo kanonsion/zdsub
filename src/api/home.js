@@ -21,7 +21,7 @@ export function policy(page) {
   return axios.post('/home/policy', JSON.stringify(page))
 }
 export function get_policy(id) {
-  return axios.get('/home/policy/toAdverShow/' + id)
+  return axios.get('/home/toPolicyShow', { params: { id } })
 }
 
 export function process(page) {
@@ -50,4 +50,28 @@ export function adver(page) {
 }
 export function get_adver(id) {
   return axios.get('/home/toAdverShow', { params: { id } })
+}
+
+
+/* 下载 */
+export function download(path) {
+  return axios({
+    method:'post',
+    url:'/home/download',
+    params:{"path":path},
+    responseType:'blob'
+  })
+  // return axios.get('/policy/download', { params: { path } },{'Content-Type':'application/x-download'})
+}
+
+
+/* 学校列表 */
+export function schoolList() {
+  return axios.get('/home/listAllSch')
+}
+
+
+/* 注册 */
+export function addEnter(page) {
+  return axios.post('/home/addEnter', JSON.stringify(page))
 }

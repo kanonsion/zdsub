@@ -22,8 +22,8 @@
         <i class="fa fa-remove"></i>
         关闭
       </li>
-      <li @click="removeOtherTab($store.getters.tabNav)">关闭其它</li>
-      <li @click="removeAllTab">关闭所有</li>
+<!--       <li @click="removeOtherTab($store.getters.tabNav)">关闭其它</li>
+ -->      <li @click="removeAllTab">关闭所有</li>
     </ul>
   </div>
 </template>

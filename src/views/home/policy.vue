@@ -5,13 +5,12 @@
       :pagination="pagination"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
-      
     />
   </div>
 </template>
 
 <script>
-import list from "./../../components/homelist";
+import list from "./../../components/policylist";
 import { policy, get_policy as get } from "@/api/home";
 export default {
   data() {

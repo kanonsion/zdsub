@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-form
-      :model="adver"
+      :model="need"
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
@@ -9,10 +9,16 @@
       size="small"
     >
       <el-form-item label="标题" prop="title">
-        <el-input v-model="adver.title"></el-input>
+        <el-input v-model="need.title"></el-input>
+      </el-form-item>
+      <el-form-item label="紧急状态">
+        <el-radio-group v-model="need.level">
+          <el-radio :label="1">紧急</el-radio>
+          <el-radio :label="2">非常紧急</el-radio>
+        </el-radio-group>
       </el-form-item>
       <el-form-item label="学校" prop="schname">
-        <el-select placeholder="请选择学校" v-model="adver.schname" @change="schoolChange($event)">
+        <el-select placeholder="请选择学校" v-model="need.schname" @change="schoolChange($event)">
           <el-option
             v-for="(item, index) in list"
             :key="index"
@@ -21,7 +27,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="详细信息">
-        <wangeditor :catchData="catchData" :content="adver.context" />
+        <wangeditor :catchData="catchData" :content="need.context" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
@@ -33,13 +39,13 @@
 
 <script>
 import wangeditor from "./../../../components/wangeditor_single";
-import { add } from "./../../../api/advertise";
+import { addNeed as add } from "./../../../api/school";
 import { schoolList } from "./../../../api/school";
 import { Message } from "element-ui";
 export default {
   data() {
     return {
-      adver: {},
+      need: {},
       list: [],
       schname: "",
       rules: {
@@ -50,16 +56,17 @@ export default {
   },
   methods: {
     catchData(val) {
-      this.adver.context = val;
+      this.need.context = val;
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let { title, context, schId } = this.adver;
+          let { title, context, schId, level } = this.need;
           this._add({
             title,
             context,
-            schId
+            schId,
+            level
           });
         }
       });
@@ -86,7 +93,7 @@ export default {
         schId = item.id;
         return item.sch_name === val;
       });
-      this.adver.schId = schId;
+      this.need.schId = schId;
     }
   },
   components: {

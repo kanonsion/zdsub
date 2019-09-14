@@ -1,34 +1,37 @@
 <template>
   <div>
     <el-form
-      :model="manager"
+      :model="need"
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
       class="form"
       size="small"
     >
-      <el-form-item label="管理员编号">
-        <el-input v-model="manager.id" disabled="disabled"></el-input>
+      <el-form-item label="需求编号">
+        <el-input v-model="need.id" disabled="disabled"></el-input>
       </el-form-item>
-      <el-form-item label="管理员名称	">
-        <el-input v-model="manager.user_name"></el-input>
+      <el-form-item label="标题	">
+        <el-input v-model="need.title"></el-input>
       </el-form-item>
-      <el-form-item label="所属学校">{{manager.schName}}</el-form-item>
-      <el-form-item label="电话" prop="telephone">
-        <el-input v-model="manager.telephone"></el-input>
+      <el-form-item label="紧急状态">
+        <el-radio-group v-model="need.level">
+          <el-radio :label="1">紧急</el-radio>
+          <el-radio :label="2">非常紧急</el-radio>
+        </el-radio-group>
       </el-form-item>
-      <el-form-item label="级别">
-        <el-select placeholder="请选择级别" v-model="roleId" @change="managerChange($event)">
+      <el-form-item label="学校">
+        <el-select placeholder="请选择学校" v-model="school.sch_name" @change="needChange($event)">
           <el-option
-            v-for="(item, index) in roleList"
+            v-for="(item, index) in schoolList"
             :key="index"
-            :value="item.role_name"
-          >{{item.role_name}}</el-option>
+            :value="item.sch_name"
+          >{{item.sch_name}}</el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间">{{manager.create_time}}</el-form-item>
-      <el-form-item label="创建者	">{{manager.user_name}}</el-form-item>
+      <el-form-item label="详细信息">
+        <wangeditor :catchData="catchData" :content="need.context" />
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         <el-button @click="back">返回列表</el-button>
@@ -38,8 +41,13 @@
 </template>
 
 <script>
-import { get, add, roleList } from "./../../../api/system";
+import {
+  getNeedOne as get,
+  editNeed as edit,
+  schoolList
+} from "./../../../api/school";
 import { Message } from "element-ui";
+import wangeditor from "./../../../components/wangeditor_single";
 var validateTelephone = (rule, value, callback) => {
   if (value === "") {
     callback(new Error("请输入电话号码"));
@@ -53,31 +61,35 @@ var validateTelephone = (rule, value, callback) => {
 export default {
   data() {
     return {
-      manager: {},
-      roleList: [],
+      need: {},
+      schoolList: [],
+      school:{},
       rules: {
         telephone: [{ validator: validateTelephone, trigger: "blur" }]
       },
-      roleId: ""
+      schId: ""
     };
   },
   methods: {
+    catchData(val) {
+      this.work.context = val;
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let { user_name, pass_word, sch_id, telephone, roleId } = this.manager;
-          this._add({
-            user_name,
-            pass_word,
-            schId:sch_id,
-            telephone,
-            roleId
+          let { id, title, level, schId, context } = this.need;
+          this._edit({
+            id,
+            title,
+            level,
+            schId,
+            context
           });
         }
       });
     },
-    async _add(data) {
-      let res = await add(data);
+    async _edit(data) {
+      let res = await edit(data);
       let { status } = res.data;
       if (status === 200) {
         Message.success("修改成功");
@@ -90,26 +102,31 @@ export default {
     async _get(id) {
       let res = await get(id);
       let { data } = res.data;
-      this.manager = data;
-      console.log(this.manager);
+      this.need = data;
+      this.school = data.school
+      console.log(res)
     },
-    async _roleList() {
-      let res = await roleList();
+    async _schoolList() {
+      let res = await schoolList();
       let data = res.data.data;
-      this.roleList = data;
+      this.schoolList = data;
     },
-    managerChange(val) {
-      let roleId;
-      this.roleList.some(item => {
-        roleId = item.id;
-        return item.role_name === val;
+    needChange(val) {
+      let schId;
+      this.schoolList.some(item => {
+        schId = item.id;
+        return item.sch_name === val;
       });
-      this.manager.roleId = roleId;
+      console.log(schId)
+      this.need.schId = schId;
     }
   },
   mounted() {
     this._get(this.$route.params.id);
-    this._roleList();
+    this._schoolList();
+  },
+  components: {
+    wangeditor
   }
 };
 </script>

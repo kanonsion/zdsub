@@ -30,27 +30,27 @@ export default [
   {
     path: '/layout/need',
     component: need => require(['@/views/university/need'], need),
-    name: '学校管理',
+    name: '需求管理',
     children: [
       {
         path: '/layout/need/list',
         component: list => require(['@/views/university/need/list'], list),
-        name: '学校管理',
+        name: '需求管理',
       },
       {
         path: '/layout/need/add',
         component: add => require(['@/views/university/need/add'], add),
-        name: '学校管理',
+        name: '需求管理',
       },
       {
         path: '/layout/need/edit/:id',
         component: edit => require(['@/views/university/need/edit'], edit),
-        name: '学校管理',
+        name: '需求管理',
       },
       {
         path: '/layout/need/look/:id',
         component: look => require(['@/views/university/need/look'], look),
-        name: '学校管理',
+        name: '需求管理',
       },
     ],
     redirect: '/layout/need/list'

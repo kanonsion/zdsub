@@ -1,27 +1,27 @@
 <template>
   <div>
-    <el-form :model="ruleForm"  ref="ruleForm" label-width="100px" size="small">
-      <el-form-item label="标题:"  class="name-input">
+    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" size="small">
+      <el-form-item label="标题:" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
         <el-button type="primary" @click="select">查询</el-button>
-        <el-button type="success" @click="$router.push('/layout/manager/add')">新增学校</el-button>
+        <el-button type="success" @click="$router.push('/layout/need/add')">新增学校</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格 -->
     <el-table :data="list" style="width: 100%" :stripe="true">
-      <el-table-column prop="id" label="管理员id" width="100px"></el-table-column>
-      <el-table-column prop="user_name" label="管理员名称" width="100px"></el-table-column>
-      <el-table-column prop="schName" label="所属学校" width="120px"></el-table-column>
-      <el-table-column prop="telephone" label="电话" width="120px"></el-table-column>
-      <el-table-column prop="roleName" label="级别" width="120px"></el-table-column>
-      <el-table-column prop="create_time" label="创建时间"></el-table-column>
-      <el-table-column prop="createName" width="100px" label="创建者"></el-table-column>
+      <el-table-column prop="id" label="编号" width="100px"></el-table-column>
+      <el-table-column prop="title" label="标题" ></el-table-column>
+      <el-table-column prop="level" label="紧急状态" width="120px"></el-table-column>
+      <el-table-column prop="school.sch_name" label="发布学校" width="120px"></el-table-column>
+      <el-table-column prop="read_num" label="阅读量" width="120px"></el-table-column>
+      <el-table-column prop="update_time" label="发布时间" width="120px"></el-table-column>
+      <el-table-column prop="update_user" width="100px" label="发布者"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-          <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
-        </template>
+<!--           <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
+ -->        </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { getNeed, removeNeed } from "./../../../api/school";
+import { getNeed, removeNeed as remove } from "./../../../api/school";
 import { Message } from "element-ui";
 export default {
   data() {
@@ -52,7 +52,7 @@ export default {
         total: 0, //总
         curr: 0 // 当前
       },
-      user_name: ''
+      user_name: ""
     };
   },
   methods: {
@@ -61,11 +61,11 @@ export default {
         pageNo: curr,
         pageSize: size,
         condition: {
-          user_name:condition
+          user_name: condition
         }
       });
-      console.log(res)
-      let { resultList, pageNo, pageSize, totalCount } = res.data.page;
+      console.log(res);
+      let { resultList, pageNo, pageSize, totalCount } = res.data.data;
       this.list = resultList;
       console.log(this.list);
       this.pagination = {
@@ -96,19 +96,19 @@ export default {
       }
     },
     handleEdit(index, row) {
-      this.$router.push("/layout/manager/edit/" + row.id);
+      this.$router.push("/layout/need/edit/" + row.id);
     },
     handleLook(index, row) {
-      this.$router.push("/layout/manager/look/" + row.id);
+      this.$router.push("/layout/need/look/" + row.id);
     },
     select() {
       let { name } = this.ruleForm;
-      this._getNeed(0, 5, name)
-      this.$router.push({ path: "/layout/manager/list/", query: { name } });
+      this._getNeed(0, 5, name);
+      this.$router.push({ path: "/layout/need/list/", query: { name } });
     }
   },
   mounted() {
-    this.user_name = this.$route.query.name
+    this.user_name = this.$route.query.name;
     this._getNeed(0, 5, this.user_name);
   }
 };
