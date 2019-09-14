@@ -1,7 +1,7 @@
 import axios from './axios'
 
 export function login(users) {
-  return axios.post('/manager/login', JSON.stringify(users))
+  return axios.post('/manager/logisdfsfn', JSON.stringify(users))
 }
 
 export function logout(token) {
