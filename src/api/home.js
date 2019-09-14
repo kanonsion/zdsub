@@ -14,7 +14,7 @@ export function work(page) {
   return axios.post('/home/work', JSON.stringify(page))
 }
 export function get_work(id) {
-  return axios.get('/home/work/toAdverShow/' + id)
+  return axios.get('/home/toWorkDynamicShow', { params: { id } })
 }
 
 export function policy(page) {
@@ -39,8 +39,15 @@ export function get_need(id) {
 }
 
 export function school(page) {
-  return axios.post('/home/school', JSON.stringify(page))
+  return axios.post('/home/scholl', JSON.stringify(page))
 }
 export function get_school(id) {
-  return axios.get('/home/school/toAdverShow/' + id)
+  return axios.get('/home/scholl/toAdverShow/' + id)
+}
+
+export function adver(page) {
+  return axios.post('/home/adver', JSON.stringify(page))
+}
+export function get_adver(id) {
+  return axios.get('/home/adver/toAdverShow/' + id)
 }

@@ -12,15 +12,15 @@
         <ul>
           <!--  -->
           <li v-for="(item, index) in list" :key="index" @click="jump(item.id)">
-            <span>{{item.title || item.path_name}}</span>
+            <span>{{item.title || item.path_name || item.sch_name}}</span>
             <span>{{item.uptate_time || item.update_time}}</span>
           </li>
         </ul>
       </div>
       <!-- 分页 -->
       <el-pagination
-        @size-change="$emit('handleSizeChange')"
-        @current-change="$emit('handleCurrentChange')"
+        @size-change="handleSizeChange1"
+        @current-change="handleCurrentChange1"
         :page-sizes="[3,6,9,12]"
         :page-size="pagination.size"
         layout="sizes, prev, pager, next"
@@ -42,15 +42,21 @@ export default {
     homeheader,
     homefooter
   },
-  props: ["list", "pagination", "handleSizeChange", "handleCurrentChange"],
+  props: ["list", "pagination", "handleSizeChange", "handleCurrentChange",'router'],
   methods: {
     jump(id) {
-      this.$router.push({ path: "/home/listshow/", query: { id } });
+      this.$router.push({ path: this.router, query: { id } });
+    },
+    handleSizeChange1(val) {
+      this.$emit("handleSizeChange", val);
+    },
+    handleCurrentChange1(val) {
+      this.$emit("handleCurrentChange", val);
     }
   },
   mounted() {
-    console.log(this.pagination)
-  },
+    console.log(this.pagination);
+  }
 };
 </script>
 

@@ -34,6 +34,7 @@
 import homeheader from "./homeheader";
 import homefooter from "./homefooter";
 export default {
+  props:['data'],
   components: {
     homeheader,
     homefooter

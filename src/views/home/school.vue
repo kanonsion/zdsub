@@ -35,6 +35,7 @@ export default {
       console.log(this.pagination);
     },
     handleSizeChange(val) {
+      console.log(val)
       let { size, curr } = this.pagination;
       size = val;
       this._school(curr, size);
@@ -44,6 +45,9 @@ export default {
       curr = (val - 1) * 3;
       this._school(curr, size);
     }
+  },
+  mounted() {
+    this._school(0, 3);
   },
   components: {
     list

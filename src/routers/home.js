@@ -29,10 +29,10 @@ export default[
   },
   {
     path: '/home/adver',
-    component: adver => require(['@/views/home/work'], adver)
+    component: adver => require(['@/views/home/adver'], adver)
   },
   {
-    path: '/home/listshow',
-    component: homelistshow => require(['@/components/homelistshow'], homelistshow)
+    path: '/home/work/show',
+    component: workshow => require(['@/views/home/workshow'], workshow)
   },
 ]

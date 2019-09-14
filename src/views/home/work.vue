@@ -5,6 +5,7 @@
       :pagination="pagination"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
+      :router='router'
     />
   </div>
 </template>
@@ -16,7 +17,8 @@ export default {
   data() {
     return {
       list: {},
-      pagination: {}
+      pagination: {},
+      router:'/home/work/show'
     };
   },
   methods: {
