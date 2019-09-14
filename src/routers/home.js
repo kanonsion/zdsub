@@ -4,7 +4,7 @@ export default[
     redirect: '/home'
   },
   {
-    path:'/404',
+    path:'*',
     component: e404 => require(['@/views/404'],e404)
   },
   {
