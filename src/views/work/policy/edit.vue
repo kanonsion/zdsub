@@ -12,7 +12,7 @@
         <el-input v-model="policy.id" disabled="disabled"></el-input>
       </el-form-item>
       <el-form-item label="标题	">
-        <el-input v-model="policy.user_name"></el-input>
+        <el-input v-model="policy.title"></el-input>
       </el-form-item>
       <el-form-item label="重新上传">
         <div>
@@ -55,7 +55,7 @@
 <script>
 import {
   findById_policy as get,
-  add_policy as add,
+  update_policy as edit,
   upload,
   uploadRemove
 } from "./../../../api/work";
@@ -66,10 +66,33 @@ export default {
       policy: {},
       rules: {},
       roleId: "",
-      files: []
+      files: [],
+      url: []
     };
   },
   methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          let { title, id } = this.policy;
+          let url = this.url.join(",");
+          console.log(url)
+          this._edit({
+            id,
+            title,
+            url
+          });
+        }
+      });
+    },
+    async _edit(data) {
+      let res = await edit(data);
+      let { status } = res.data;
+      if (status === 200) {
+        Message.success("添加成功");
+        this.$router.go(-1);
+      }
+    },
     back() {
       this.$router.go(-1);
     },
@@ -77,14 +100,14 @@ export default {
       let res = await get(id);
       let { data } = res.data;
       this.policy = data;
-      let urls = this.policy.url.split(',')
+      let urls = this.policy.url.split(",");
       for (const item of urls) {
         this.files.push({
-          name:item,
-          delname:item
-        })
+          name: item,
+          delname: item
+        });
+        this.url.push(item);
       }
-      console.log(this.policy);
     },
     /* 上传 */
     beforeAvatarUpload(file) {
@@ -103,15 +126,13 @@ export default {
       let arr = msg.split("/");
       let delname = arr[arr.length - 1];
       this.url.push(delname);
-      console.log(this.url);
-      this.files.push({
-        uid: content.file.uid,
-        name: content.file.name,
-        delname
-      });
     },
     async fileMove(file, filelist) {
       let res = await uploadRemove(file.delname);
+      let index = this.url.findIndex(item=>{
+        return item.delname === file.delname
+      })
+      this.url.splice(index, 1)
     },
     submitUpload() {
       this.$refs.upload.submit();

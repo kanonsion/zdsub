@@ -37,3 +37,10 @@ export function need(page) {
 export function get_need(id) {
   return axios.get('/home/need/toAdverShow/' + id)
 }
+
+export function school(page) {
+  return axios.post('/home/school', JSON.stringify(page))
+}
+export function get_school(id) {
+  return axios.get('/home/school/toAdverShow/' + id)
+}

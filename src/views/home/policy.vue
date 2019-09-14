@@ -32,6 +32,7 @@ export default {
         total: totalCount,
         curr: pageNo
       };
+      console.log(this.pagination)
     },
     handleSizeChange(val) {
       let { size, curr } = this.pagination;

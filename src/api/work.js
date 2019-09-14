@@ -47,7 +47,7 @@ export function getpolicy(page) {
   return axios.post('/policy/getPage', JSON.stringify(page))
 }
 
-/* 删除单个 */
+/* 查找单个 */
 export function delById_policy(id) {
   return axios.get('/policy/delById?id=' + id)
 }
@@ -59,6 +59,11 @@ export function findById_policy(id) {
 /* 添加 */
 export function add_policy(page) {
   return axios.post('/policy/add', JSON.stringify(page))
+}
+
+/* 编辑 */
+export function update_policy(page) {
+  return axios.post('/policy/update', JSON.stringify(page))
 }
 
 
