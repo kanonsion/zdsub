@@ -16,4 +16,10 @@ export default {
     body{
         background-image: url('../../public/images/404.png')
     }
+    button{
+        position: absolute;
+        top:55%;
+        left: 55%
+        
+    }
 </style>
