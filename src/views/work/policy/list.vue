@@ -94,11 +94,21 @@ export default {
     handleEdit(index, row) {
       this.$router.push("/layout/policy/edit/" + row.id);
     },
-    async handleDownload(index, row) {
-      let res = await download(row.url);
-      let blob = new Blob([res.data],{type:'application/octet-stream'}); //创建一个blob对象
-      let objUrl = URL.createObjectURL(blob)
-      window.location.href = objUrl
+     handleDownload(index, row) {
+      download(row.url)
+        .then(res=>{
+           	let link = document.createElement("a");
+					link.href = window.URL.createObjectURL(new Blob([res.data], {type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"}));
+          link.target = "_blank";
+          let fileName = window.decodeURI(res.headers['content-disposition'].split('=')[1]);
+					link.download = fileName;
+          document.body.appendChild(link); 
+					link.click();
+					document.body.removeChild(link);
+        })
+        .catch(err=>{
+        })
+      
     },
     select() {
       let { name } = this.ruleForm;

@@ -34,7 +34,13 @@ export function upload(file) {
 
 /* 下载 */
 export function download(path) {
-  return axios.get('/policy/download', { params: { path } })
+  return axios({
+    method:'post',
+    url:'/policy/download',
+    params:{"path":path},
+    responseType:'blob'
+  })
+  // return axios.get('/policy/download', { params: { path } },{'Content-Type':'application/x-download'})
 }
 
 /* 删除图片 */
