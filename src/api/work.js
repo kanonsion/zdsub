@@ -51,6 +51,10 @@ export function getpolicy(page) {
 export function delById_policy(id) {
   return axios.get('/policy/delById?id=' + id)
 }
+/* 删除单个 */
+export function findById_policy(id) {
+  return axios.get('/policy/findById?id=' + id)
+}
 
 /* 添加 */
 export function add_policy(page) {

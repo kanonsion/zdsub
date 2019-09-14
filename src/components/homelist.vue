@@ -47,7 +47,10 @@ export default {
     jump(id) {
       this.$router.push({ path: "/home/listshow/", query: { id } });
     }
-  }
+  },
+  mounted() {
+    console.log(this.pagination)
+  },
 };
 </script>
 

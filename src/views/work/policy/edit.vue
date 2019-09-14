@@ -1,34 +1,49 @@
 <template>
   <div>
     <el-form
-      :model="manager"
+      :model="policy"
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
       class="form"
       size="small"
     >
-      <el-form-item label="管理员编号">
-        <el-input v-model="manager.id" disabled="disabled"></el-input>
+      <el-form-item label="编号">
+        <el-input v-model="policy.id" disabled="disabled"></el-input>
       </el-form-item>
-      <el-form-item label="管理员名称	">
-        <el-input v-model="manager.user_name"></el-input>
+      <el-form-item label="标题	">
+        <el-input v-model="policy.user_name"></el-input>
       </el-form-item>
-      <el-form-item label="所属学校">{{manager.schName}}</el-form-item>
-      <el-form-item label="电话" prop="telephone">
-        <el-input v-model="manager.telephone"></el-input>
+      <el-form-item label="重新上传">
+        <div>
+          <el-upload
+            class="upload"
+            drag
+            ref="upload"
+            accept
+            :before-upload="beforeAvatarUpload"
+            action
+            :auto-upload="false"
+            :http-request="_upload"
+            :on-remove="fileMove"
+            :multiple="true"
+            :file-list="files"
+          >
+            <i class="el-icon-upload"></i>
+            <div class="el-upload__text">
+              将文件拖到此处，或
+              <em>点击上传</em>
+            </div>
+          </el-upload>
+          <el-button
+            style="margin-top:10px"
+            size="small"
+            type="success"
+            @click="submitUpload"
+          >上传到服务器</el-button>
+          <div class="el-upload__tip" slot="tip">文件大小不能超过19M</div>
+        </div>
       </el-form-item>
-      <el-form-item label="级别">
-        <el-select placeholder="请选择级别" v-model="roleId" @change="managerChange($event)">
-          <el-option
-            v-for="(item, index) in roleList"
-            :key="index"
-            :value="item.role_name"
-          >{{item.role_name}}</el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="创建时间">{{manager.create_time}}</el-form-item>
-      <el-form-item label="创建者	">{{manager.user_name}}</el-form-item>
       <el-form-item>
         <el-button type="primary" @click="submitForm('ruleForm')">保存</el-button>
         <el-button @click="back">返回列表</el-button>
@@ -38,78 +53,72 @@
 </template>
 
 <script>
-import { get, add, roleList } from "./../../../api/system";
+import {
+  findById_policy as get,
+  add_policy as add,
+  upload,
+  uploadRemove
+} from "./../../../api/work";
 import { Message } from "element-ui";
-var validateTelephone = (rule, value, callback) => {
-  if (value === "") {
-    callback(new Error("请输入电话号码"));
-  } else {
-    if (!/^1[3456789]\d{9}$/.test(value)) {
-      callback(new Error("请输入正确的电话号码"));
-    }
-    callback();
-  }
-};
 export default {
   data() {
     return {
-      manager: {},
-      roleList: [],
-      rules: {
-        telephone: [{ validator: validateTelephone, trigger: "blur" }]
-      },
-      roleId: ""
+      policy: {},
+      rules: {},
+      roleId: "",
+      files: []
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          let { user_name, pass_word, sch_id, telephone, roleId } = this.manager;
-          this._add({
-            user_name,
-            pass_word,
-            schId:sch_id,
-            telephone,
-            roleId
-          });
-        }
-      });
-    },
-    async _add(data) {
-      let res = await add(data);
-      let { status } = res.data;
-      if (status === 200) {
-        Message.success("修改成功");
-        this.$router.go(-1);
-      }
-    },
     back() {
       this.$router.go(-1);
     },
     async _get(id) {
       let res = await get(id);
       let { data } = res.data;
-      this.manager = data;
-      console.log(this.manager);
+      this.policy = data;
+      let urls = this.policy.url.split(',')
+      for (const item of urls) {
+        this.files.push({
+          name:item,
+          delname:item
+        })
+      }
+      console.log(this.policy);
     },
-    async _roleList() {
-      let res = await roleList();
-      let data = res.data.data;
-      this.roleList = data;
+    /* 上传 */
+    beforeAvatarUpload(file) {
+      let size = file.size / 1024 / 1024 < 19;
+      if (!size) {
+        Message.error("文件大小不能超过19M");
+        return false;
+      }
     },
-    managerChange(val) {
-      let roleId;
-      this.roleList.some(item => {
-        roleId = item.id;
-        return item.role_name === val;
+    async _upload(content) {
+      let formData = new FormData();
+      formData.append("file", content.file);
+      let res = await upload(formData);
+
+      let { msg } = res.data;
+      let arr = msg.split("/");
+      let delname = arr[arr.length - 1];
+      this.url.push(delname);
+      console.log(this.url);
+      this.files.push({
+        uid: content.file.uid,
+        name: content.file.name,
+        delname
       });
-      this.manager.roleId = roleId;
+    },
+    async fileMove(file, filelist) {
+      let res = await uploadRemove(file.delname);
+    },
+    submitUpload() {
+      this.$refs.upload.submit();
     }
   },
   mounted() {
     this._get(this.$route.params.id);
-    this._roleList();
   }
 };
 </script>

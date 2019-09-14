@@ -9,18 +9,15 @@
     </el-form>
     <!-- 表格 -->
     <el-table :data="list" style="width: 100%" :stripe="true">
-      <el-table-column prop="id" label="管理员id" width="100px"></el-table-column>
-      <el-table-column prop="user_name" label="管理员名称" width="100px"></el-table-column>
-      <el-table-column prop="schName" label="所属学校" width="120px"></el-table-column>
-      <el-table-column prop="telephone" label="电话" width="120px"></el-table-column>
-      <el-table-column prop="roleName" label="级别" width="120px"></el-table-column>
-      <el-table-column prop="create_time" label="创建时间"></el-table-column>
-      <el-table-column prop="createName" width="100px" label="创建者"></el-table-column>
+      <el-table-column prop="id" label="编号" ></el-table-column>
+      <el-table-column prop="title" label="标题" width="100px"></el-table-column>
+      <el-table-column prop="update_time" label="最后更新时间" width="120px"></el-table-column>
+      <el-table-column prop="create_user.user_name" label="发布者" width="120px"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-          <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
+          <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">下载</el-button>
         </template>
       </el-table-column>
     </el-table>
