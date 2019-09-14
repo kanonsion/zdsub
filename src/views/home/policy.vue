@@ -5,6 +5,7 @@
       :pagination="pagination"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
+      
     />
   </div>
 </template>
@@ -15,7 +16,7 @@ import { policy, get_policy as get } from "@/api/home";
 export default {
   data() {
     return {
-      list: {}
+      list: {},
     };
   },
   methods: {

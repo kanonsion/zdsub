@@ -22,7 +22,7 @@
         @size-change="handleSizeChange1"
         @current-change="handleCurrentChange1"
         :page-sizes="[3,6,9,12]"
-        :page-size="pagination.size"
+        :page-size="pagination.size || 3"
         layout="sizes, prev, pager, next"
         :total="pagination.total"
         class="pagination"
@@ -55,7 +55,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.pagination);
   }
 };
 </script>

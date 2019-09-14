@@ -5,6 +5,7 @@
       :pagination="pagination"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
+      :router='router'
     />
   </div>
 </template>
@@ -15,7 +16,8 @@ import { need, get_need as get } from "@/api/home";
 export default {
   data() {
     return {
-      list: {}
+      list: {},
+      router:'/home/need/show'
     };
   },
   methods: {

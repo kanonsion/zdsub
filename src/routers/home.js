@@ -39,4 +39,20 @@ export default[
     path: '/home/work/show',
     component: workshow => require(['@/views/home/workshow'], workshow)
   },
+  {
+    path: '/home/need/show',
+    component: needshow => require(['@/views/home/needshow'], needshow)
+  },
+  {
+    path: '/home/process/show',
+    component: processshow => require(['@/views/home/processshow'], processshow)
+  },
+  {
+    path: '/home/school/show',
+    component: schoolshow => require(['@/views/home/schoolshow'], schoolshow)
+  },
+  {
+    path: '/home/adver/show',
+    component: advershow => require(['@/views/home/advershow'], advershow)
+  },
 ]

@@ -5,28 +5,28 @@
       <!-- 面包屑 -->
       <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <el-breadcrumb-item>动态内容</el-breadcrumb-item>
       </el-breadcrumb>
       <!--  -->
       <div class="context">
         <div class="detail">
           <div class="title">
-            <h2>关于IPv6测试校园网断网的通知</h2>
+            <h2>{{data.title || data.path_name || data.sch_name}}</h2>
           </div>
-          <div class="text">校园网用户：</div>
-        </div>
-        <div class="more">
-          <p>更多</p>
-          <ul>
-            <li>西藏大学2019年西藏自治区自然科学基金项目申报和评审</li>
-            <li>西藏大学2019年西藏自治区自然科学基金项目申报和评审</li>
-          </ul>
+          <div class="text" v-html="data.context || data.message" v-if="!data.path_name"></div>
+          <div style="display:flex;flex-wrap: wrap" v-else>
+            <div :key="tag" v-for="tag in tags" class="tag">
+              <div class="center"></div>
+              <div class="to_right"></div>
+              <el-tag :disable-transitions="true">{{tag}}</el-tag>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
     <!--  -->
-    <homefooter/>
+    <homefooter />
   </div>
 </template>
 
@@ -34,19 +34,21 @@
 import homeheader from "./homeheader";
 import homefooter from "./homefooter";
 export default {
-  props:['data'],
+  props: ["data"],
   components: {
     homeheader,
     homefooter
   },
-  mounted() {
-    console.log(this.route)
-  },
+  computed: {
+    tags() {
+      return this.data.context.split("|");
+    }
+  }
 };
 </script>
 
 <style lang="less">
-@import url('./../common/css/mixin.less');
+@import url("./../common/css/mixin.less");
 #homelistshow {
   .main {
     .center(60%);

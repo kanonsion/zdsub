@@ -28,26 +28,26 @@ export function process(page) {
   return axios.post('/home/process', JSON.stringify(page))
 }
 export function get_process(id) {
-  return axios.get('/home/process/toAdverShow/' + id)
+  return axios.get('/home/toProcessShow', { params: { id } })
 }
 
 export function need(page) {
   return axios.post('/home/need', JSON.stringify(page))
 }
 export function get_need(id) {
-  return axios.get('/home/need/toAdverShow/' + id)
+  return axios.get('/home/toNeedShow', { params: { id } })
 }
 
 export function school(page) {
   return axios.post('/home/scholl', JSON.stringify(page))
 }
 export function get_school(id) {
-  return axios.get('/home/scholl/toAdverShow/' + id)
+  return axios.get('/home/toSchollShow', { params: { id } })
 }
 
 export function adver(page) {
   return axios.post('/home/adver', JSON.stringify(page))
 }
 export function get_adver(id) {
-  return axios.get('/home/adver/toAdverShow/' + id)
+  return axios.get('/home/toAdverShow', { params: { id } })
 }

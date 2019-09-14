@@ -6,7 +6,7 @@
 
 <script>
 import homelistshow from "@/components/homelistshow";
-import { get_work as get } from "@/api/home";
+import { get_adver as get } from "@/api/home";
 export default {
   data() {
     return {

@@ -5,6 +5,7 @@
       :pagination="pagination"
       @handleSizeChange="handleSizeChange"
       @handleCurrentChange="handleCurrentChange"
+      :router='router'
     />
   </div>
 </template>
@@ -15,7 +16,8 @@ import { school, get_school as get } from "@/api/home";
 export default {
   data() {
     return {
-      list: {}
+      list: {},
+      router:'/home/school/show'
     };
   },
   methods: {
