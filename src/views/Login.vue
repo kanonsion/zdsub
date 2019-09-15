@@ -20,6 +20,7 @@
 <script>
 import { Message } from "element-ui";
 import { login } from "./../api/home";
+import { Notification } from "element-ui";
 import md5 from "md5";
 export default {
   data() {
@@ -67,14 +68,23 @@ export default {
       if (res) {
         let { status, msg, data } = res.data;
         let { authorization } = res.headers;
-        localStorage.token = authorization;
+        sessionStorage.token = authorization;
+        sessionStorage.btn = true;
         if (status === 200) {
           Message.success(msg);
           this.$router.push({ path: "/layout?" });
-          localStorage.user_name = data
+          sessionStorage.user_name = data;
         }
       }
     }
+  },
+  mounted() {
+    this.$notify({
+      title: "提示",
+      message: "用户名:test<p>密 &nbsp;&nbsp;码:test",
+      dangerouslyUseHTMLString:true,
+      duration: 0
+    });
   }
 };
 </script>

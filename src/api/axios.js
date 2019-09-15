@@ -15,8 +15,8 @@ axios.interceptors.request.use(config => {
     fullscreen: true, text: "加载中",
     background: 'rgba(0, 0, 0, .7)'
   })
-  if (localStorage.token) {
-    config.headers.Authorization = localStorage.token
+  if (sessionStorage.token) {
+    config.headers.Authorization = sessionStorage.token
   }
   return config;
 }, error => {

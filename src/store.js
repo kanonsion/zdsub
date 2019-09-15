@@ -34,7 +34,7 @@ export default new Vuex.Store({
         if (url === '') {
           router.push('/layout')
         } else {
-          tab.router.push(url.path)
+          tab.routers.push(url.path)
         }
       }
     },

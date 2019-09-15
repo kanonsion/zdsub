@@ -40,6 +40,7 @@
 <script>
 import { get, update as edit, roleList } from "./../../../api/system";
 import { Message } from "element-ui";
+import md5 from 'md5'
 var validateTelephone = (rule, value, callback) => {
   if (value === "") {
     callback(new Error("请输入电话号码"));
@@ -68,7 +69,7 @@ export default {
           let { id,user_name, pass_word, sch_id, telephone, roleId } = this.manager;
           this._edit({
             user_name,
-            pass_word,
+            pass_word:md5(pass_word),
             schId:sch_id,
             telephone,
             roleId,

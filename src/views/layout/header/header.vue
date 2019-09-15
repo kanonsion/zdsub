@@ -46,18 +46,19 @@ export default {
       }
     },
     async _logout() {
-      let res = await logout(localStorage.token);
+      let res = await logout(sessionStorage.token);
       console.log(res);
       let { status, msg } = res.data;
       if (status === 200) {
         Message.success(msg);
-        localStorage.token = "";
+        sessionStorage.token = "";
+        sessionStorage.btn = false;
         this.$router.push({ path: "/home" });
       }
     }
   },
   mounted() {
-    this.name = localStorage.user_name;
+    this.name = sessionStorage.user_name;
   }
 };
 </script>

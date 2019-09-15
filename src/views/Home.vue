@@ -15,8 +15,15 @@
           <li @click="jump('/home/adver')">人员招聘</li>
         </ul>
       </div>
-      <div class="btn" @click="jump('/login')">
-        <el-button type="info" plain size="small">登录</el-button>
+      <div class="btn">
+        <el-button type="info" plain size="small" @click="jump('/login')">登录</el-button>
+        <el-button
+          type="info"
+          plain
+          size="small"
+          v-if="btn"
+          @click="()=>{this.$router.push('/layout')}"
+        >后台</el-button>
       </div>
     </header>
     <!-- 遮罩层 -->
@@ -94,6 +101,7 @@
 export default {
   data() {
     return {
+      btn: JSON.parse(sessionStorage.btn || false),
       imgs: [
         "http://pic1.win4000.com/wallpaper/2019-05-17/5cde49ac0fff5.jpg",
         "http://pic1.win4000.com/wallpaper/2019-05-17/5cde49accc7eb.jpg",
