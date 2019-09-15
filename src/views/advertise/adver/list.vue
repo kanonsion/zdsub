@@ -4,7 +4,7 @@
       <el-form-item label="标题:" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
         <el-button type="primary" @click="select">查询</el-button>
-        <el-button type="success" @click="$router.push('/layout/adver/add')">新增需求</el-button>
+        <el-button type="success" @click="$router.push('/layout/adver/add')">新增</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格 -->

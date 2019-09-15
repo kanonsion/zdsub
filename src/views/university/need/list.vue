@@ -4,7 +4,7 @@
       <el-form-item label="标题:" class="name-input">
         <el-input v-model="ruleForm.name"></el-input>
         <el-button type="primary" @click="select">查询</el-button>
-        <el-button type="success" @click="$router.push('/layout/need/add')">新增学校</el-button>
+        <el-button type="success" @click="$router.push('/layout/need/add')">新增</el-button>
       </el-form-item>
     </el-form>
     <!-- 表格 -->
@@ -20,8 +20,8 @@
         <template slot-scope="scope">
           <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-<!--           <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
- -->        </template>
+          <el-button type="info" size="mini" @click="handleLook(scope.$index, scope.row)">查看</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 分页 -->

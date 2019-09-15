@@ -1,7 +1,7 @@
 import adver from '@/views/advertise/adver'
 import adverlist from '@/views/advertise/adver/list'
 import adveradd from '@/views/advertise/adver/add'
-import adveredit from '@/views/advertise/adver/look'
+import adveredit from '@/views/advertise/adver/edit'
 import adverlook from '@/views/advertise/adver/look'
 import enterName from '@/views/advertise/enterName'
 

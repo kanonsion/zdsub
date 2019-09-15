@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Message, Loading } from 'element-ui'
 import router from './../routers'
 
-axios.defaults.baseURL = 'http://182.92.64.223:8080/zdsub'
+axios.defaults.baseURL = 'http://localhost:8080/zdsub'
 //请求头
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 /*  */
