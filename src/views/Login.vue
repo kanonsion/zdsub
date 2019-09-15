@@ -81,7 +81,7 @@ export default {
   mounted() {
     this.$notify({
       title: "提示",
-      message: "用户名:test<p>密 &nbsp;&nbsp;码:test",
+      message: "用户名:test<p>密 &nbsp;&nbsp;码:admin",
       dangerouslyUseHTMLString:true,
       duration: 0
     });
