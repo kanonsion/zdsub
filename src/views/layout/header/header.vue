@@ -49,12 +49,10 @@ export default {
       let res = await logout(sessionStorage.token);
       console.log(res);
       let { status, msg } = res.data;
-      if (status === 200) {
-        Message.success(msg);
-        sessionStorage.token = "";
-        sessionStorage.btn = false;
-        this.$router.push({ path: "/home" });
-      }
+      Message.success(msg);
+      sessionStorage.token = "";
+      sessionStorage.btn = false;
+      this.$router.push({ path: "/home" });
     }
   },
   mounted() {
