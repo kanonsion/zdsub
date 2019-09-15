@@ -70,11 +70,9 @@ export default {
         let { authorization } = res.headers;
         sessionStorage.token = authorization;
         sessionStorage.btn = true;
-        if (status === 200) {
-          Message.success(msg);
-          this.$router.push({ path: "/layout?" });
-          sessionStorage.user_name = data;
-        }
+        Message.success(msg);
+        this.$router.push({ path: "/layout?" });
+        sessionStorage.user_name = data;
       }
     }
   },
@@ -82,7 +80,7 @@ export default {
     this.$notify({
       title: "提示",
       message: "用户名:test<p>密 &nbsp;&nbsp;码:admin",
-      dangerouslyUseHTMLString:true,
+      dangerouslyUseHTMLString: true,
       duration: 0
     });
   }
