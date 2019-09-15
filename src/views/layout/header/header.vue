@@ -49,7 +49,13 @@ export default {
       let res = await logout(sessionStorage.token);
       console.log(res);
       let { status, msg } = res.data;
-      Message.success(msg);
+      if (status === 200) {
+        Message.success(msg);
+        sessionStorage.token = "";
+        sessionStorage.btn = false;
+        this.$router.push({ path: "/home" });
+        return;
+      }
       sessionStorage.token = "";
       sessionStorage.btn = false;
       this.$router.push({ path: "/home" });

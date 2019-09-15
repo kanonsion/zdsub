@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { add, roleList } from "./../../../api/system";
+import { add, roleList, verifyByName } from "./../../../api/system";
 import { schoolList } from "@/api/school";
 import { Message } from "element-ui";
 import md5 from "md5";
@@ -75,16 +75,24 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          let { user_name, pass_word, schId, telephone, roleId } = this.manager;
-          this._add({
-            user_name,
-            pass_word: md5(pass_word),
-            schId,
-            telephone,
-            roleId
-          });
+          this._verifyByName(this.manager.user_name);
         }
       });
+    },
+    async _verifyByName(name) {
+      let res = await verifyByName(name);
+      if (res.data.data === false) {
+        let { user_name, pass_word, schId, telephone, roleId } = this.manager;
+        this._add({
+          user_name,
+          pass_word: md5(pass_word),
+          schId,
+          telephone,
+          roleId
+        });
+      } else {
+        Message.error("管理员名称重复");
+      }
     },
     async _add(data) {
       let res = await add(data);

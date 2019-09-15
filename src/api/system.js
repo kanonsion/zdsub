@@ -14,6 +14,10 @@ export function delById(id) {
 export function get(id) {
   return axios.get('manager/getById?id=' + id)
 }
+/* 查询 */
+export function verifyByName(name) {
+  return axios.get('manager/verifyByName?name=' + name)
+}
 
 /* 修改 */
 export function add(data) {

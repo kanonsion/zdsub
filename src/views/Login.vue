@@ -78,10 +78,10 @@ export default {
   },
   mounted() {
     this.$notify({
-      title: "提示",
+      title: "测试账号",
       message: "用户名:test<p>密 &nbsp;&nbsp;码:admin",
       dangerouslyUseHTMLString: true,
-      duration: 0
+      duration: 3000
     });
   }
 };
